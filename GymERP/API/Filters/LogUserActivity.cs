@@ -16,7 +16,6 @@ namespace API.Filters
 
             var uow = resultContext.HttpContext.RequestServices.GetRequiredService<IUnitOfWork>();
             var user = await uow.UserRepository.GetUserByIdAsync(userId);
-            user.LastActive = DateTime.UtcNow;
             await uow.Complete();
         }
     }

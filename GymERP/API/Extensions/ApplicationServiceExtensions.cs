@@ -15,16 +15,12 @@ namespace API.Extensions
     {
         public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration configuration)
         {
-
             services.AddDbContext<DataContext>(opt =>
             {
                 opt.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
             });
             //services.AddScoped<ITokenService, TokenService>();
 
-            // services.AddScoped<IUserRepository, UserRepository>();
-            // services.AddScoped<ILikesRepository, LikesRepository>();
-            // services.AddScoped<IMessageRepository, MessageRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());

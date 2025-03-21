@@ -5,10 +5,11 @@ namespace Data.Entities
     public class User : IdentityUser<int>
     {
         public DateOnly DateOfBirth { get; set; }
-        public DateTime Created { get; set; } = DateTime.UtcNow;
-        public DateTime LastActive { get; set; } = DateTime.UtcNow;
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        public bool IsLocked { get; set; }
+        public bool IsActive { get; set; } = true;
         public string Gender { get; set; }
-        public List<UserPhoto> Photos { get; set; } = new();
         public required ICollection<UserRole> UserRoles { get; set; }
+        public required ICollection<UserPhoto> UserPhotos { get; set; }
     }
 }
