@@ -1,16 +1,22 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Data.Entities
 {
     [Table("UserPhotos")]
     public class UserPhoto
     {
-        public int Id { get; set; }
+        [Key]
+        public int PhotoId { get; set; }
+        public int UserId { get; set; }
+        public bool IsMain { get; set; }
         public string Url { get; set; }
-        public bool IsMain { get; set; } = false;
-        public string PublicId { get; set; }
-        public bool IsApproved { get; set; }
-        public int AppUserId { get; set; }
-        public User AppUser { get; set; }
+        public User User { get; set; }
+
     }
 }

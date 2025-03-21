@@ -46,9 +46,9 @@ namespace Repository
 
             query = userParams.OrderBy switch
             {
-                "created" => query.OrderByDescending(u => u.Created),
+                "created" => query.OrderByDescending(u => u.CreatedAt),
 
-                _ => query.OrderByDescending(u => u.LastActive)
+                _ => query.OrderByDescending(u => u.CreatedAt)
             };
             return await PagedList<MemberDto>.CreateAsync(
                 query.AsNoTracking().ProjectTo<MemberDto>(_mapper.ConfigurationProvider),
@@ -63,7 +63,7 @@ namespace Repository
         public async Task<User> GetUserByUsernameAsync(string username)
         {
             return await _context.Users
-                .Include(p => p.Photos)
+                .Include(p => p.UserPhotos)
                 .SingleOrDefaultAsync(s => s.UserName == username);
         }
 
@@ -77,7 +77,7 @@ namespace Repository
         public async Task<IEnumerable<User>> GetUsersAsync()
         {
             return await _context.Users
-                .Include(p => p.Photos)
+                .Include(p => p.UserPhotos)
                 .ToListAsync();
         }
 
@@ -89,9 +89,9 @@ namespace Repository
         public async Task<User> GetUserByPhotoId(int photoId)
         {
             return await _context.Users
-            .Include(p => p.Photos)
+            .Include(p => p.UserPhotos)
             .IgnoreQueryFilters()
-            .Where(p => p.Photos.Any(p => p.Id == photoId))
+            .Where(p => p.UserPhotos.Any(p => p.PhotoId == photoId))
             .FirstOrDefaultAsync();
         }
     }
