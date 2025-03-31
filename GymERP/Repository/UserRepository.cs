@@ -46,9 +46,9 @@ namespace Repository
 
             query = userParams.OrderBy switch
             {
-                "created" => query.OrderByDescending(u => u.CreatedAt),
+                "created" => query.OrderByDescending(u => u.JoinedDate),
 
-                _ => query.OrderByDescending(u => u.CreatedAt)
+                _ => query.OrderByDescending(u => u.JoinedDate)
             };
             return await PagedList<MemberDto>.CreateAsync(
                 query.AsNoTracking().ProjectTo<MemberDto>(_mapper.ConfigurationProvider),
@@ -79,6 +79,11 @@ namespace Repository
             return await _context.Users
                 .Include(p => p.UserPhotos)
                 .ToListAsync();
+        }
+
+        public async Task<bool> CheckUsername(string userName)
+        {
+            return await _context.Users.AnyAsync(s => s.UserName == userName);
         }
 
         public void Update(User user)

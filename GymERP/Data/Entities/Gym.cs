@@ -12,7 +12,7 @@ namespace Data.Entities
     public class Gym
     {
         [Key]
-        public int GymID { get; set; }
+        public int GymId { get; set; }
 
         [Required, MaxLength(255)]
         public string Name { get; set; }
@@ -33,10 +33,13 @@ namespace Data.Entities
         public string Email { get; set; }
 
         [Required]
-        public bool IsActive { get; set; } = true;
+        public bool IsActive { get; set; }
+        public bool IsDeleted { get; set; }
 
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        public DateTime JoinedDate { get; set; }
 
-        public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
+        public DateTime DateUpdated { get; set; } = DateTime.UtcNow;
+
+        public ICollection<UserGym> UserGyms { get; set; }
     }
 }

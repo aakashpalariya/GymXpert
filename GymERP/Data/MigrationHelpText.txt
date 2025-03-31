@@ -6,4 +6,7 @@ update-database
 ---- Use GymERP folder for database update commands ----
 
 dotnet ef migrations add initialMigration -o Migrations --startup-project API  --project Data
+
 dotnet ef database update --startup-project API  --project Data
+
+dotnet ef migrations remove --startup-project API  --project Data

@@ -1,0 +1,56 @@
+﻿[
+  {
+    "FirstName": "Aakash",
+    "MiddleName": "",
+    "LastName": "Palariya",
+    "UserName": "aakash",
+    "Gender": "Male",
+    "DateOfBirth": "1996-07-22",
+    "City": "Haldwani",
+    "State": "Uttarakhand",
+    "MobileNumber": "9876543210",
+    "Address": "No address need for this user",
+    "UserPhotos": [
+      {
+        "Url": "https://randomuser.me/api/portraits/men/46.jpg",
+        "IsMain": true
+      }
+    ]
+  },
+  {
+    "FirstName": "Ansh",
+    "MiddleName": "",
+    "LastName": "Saxena",
+    "UserName": "ansh",
+    "Gender": "Male",
+    "DateOfBirth": "1996-07-22",
+    "City": "Kashipur",
+    "State": "Uttarakhand",
+    "MobileNumber": "9876543210",
+    "Address": "No address need for this user",
+    "UserPhotos": [
+      {
+        "Url": "https://randomuser.me/api/portraits/men/56.jpg",
+        "IsMain": true
+      }
+    ]
+  },
+  {
+    "FirstName": "Nishchay",
+    "MiddleName": "",
+    "LastName": "Joshi",
+    "UserName": "nishchay",
+    "Gender": "Male",
+    "DateOfBirth": "1996-07-22",
+    "City": "Haldwani",
+    "State": "Uttarakhand",
+    "MobileNumber": "9876543210",
+    "Address": "No address need for this user",
+    "UserPhotos": [
+      {
+        "Url": "https://randomuser.me/api/portraits/men/66.jpg",
+        "IsMain": true
+      }
+    ]
+  }
+]

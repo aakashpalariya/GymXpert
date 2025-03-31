@@ -1,15 +1,13 @@
-import type { Metadata } from "next";
 import { Outfit } from "next/font/google";
 import "./globals.css";
+
+import { SidebarProvider } from "@/context/SidebarContext";
+import { ThemeProvider } from "@/context/ThemeContext";
 
 const outfit = Outfit({
   variable: "--font-outfit-sans",
   subsets: ["latin"],
 });
-export const metadata: Metadata = {
-  title: "Gym Xpert",
-  description: "A app for managing your Gym",
-};
 
 export default function RootLayout({
   children,
@@ -17,9 +15,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html>
-      <body className={`${outfit.variable}`}>
-        {children}
+    <html lang="en">
+      <body className={`${outfit.variable} dark:bg-gray-900`}>
+        <ThemeProvider>
+          <SidebarProvider>{children}</SidebarProvider>
+        </ThemeProvider>
       </body>
     </html>
   );
