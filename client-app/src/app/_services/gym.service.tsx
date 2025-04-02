@@ -1,4 +1,9 @@
+import { BehaviorSubject } from "rxjs";
+import { fetchWithAuth } from "../_lib/fetcher";
+
 var defaultUrl = process.env.NEXT_PUBLIC_API_PATH;
+var currentUserSource = new BehaviorSubject<User | null>(null);
+var currentUser$ = currentUserSource.asObservable();
 
 export const getGymDDL = async (): Promise<SelectItem<number>[]> => {
     let res = await fetch(`${defaultUrl}/api/gym/select-item`);
@@ -15,12 +20,20 @@ export const getGymDDL = async (): Promise<SelectItem<number>[]> => {
 };
 
 export const getGymDetails = async (): Promise<Gym[]> => {
-    let res = await fetch(`${defaultUrl}/api/gym/`);
+    const data = await fetchWithAuth<any>('api/gym', "GET");
 
-    if (!res.ok) {
-        throw new Error("Failed to fetch gym details");
-    }  
-    var data = await res.json();
+    // const res = await fetch(`${defaultUrl}/api/gym`, {
+    //     method: 'GET',
+    //     headers: {
+    //         'Content-Type': 'application/json',
+    //         'Authorization': `Bearer ${authToken}`,
+    //     },
+        
+    // });
+    // if (!res.ok) {
+    //     throw new Error("Failed to fetch gym details");
+    // }  
+    // var data = await res.json();
     const gymList: Gym[] = (data.data as any[]).map((gym: any) => ({
         ...gym,
         joinedDate: new Date(gym.joinedDate),
@@ -30,13 +43,8 @@ export const getGymDetails = async (): Promise<Gym[]> => {
 };
 
 export const getGymDetailById = async (gymId: string): Promise<Gym> => {
-    // Construct the URL with the gymId parameter
-    let res = await fetch(`${defaultUrl}/api/gym/${gymId}`);
-
-    if (!res.ok) {
-        throw new Error("Failed to fetch gym details");
-    }  
-    var data = await res.json();
+    
+    const data = await fetchWithAuth<any>(`api/gym/${gymId}`, "GET");
 
     const gym: Gym = data.data;
 
@@ -45,14 +53,8 @@ export const getGymDetailById = async (gymId: string): Promise<Gym> => {
 
 
 export const deleteGymDetailById = async (gymId: number): Promise<boolean> => {
-    // Construct the URL with the gymId parameter
-    const res = await fetch(`${defaultUrl}/api/gym/${gymId}`, {
-        method: 'DELETE', // Specify the HTTP method
-        headers: {
-            'Content-Type': 'application/json', // Specify that the body contains JSON
-        },
-    });
-    var data = await res.json();
+    const data = await fetchWithAuth<any>(`api/gym/${gymId}`, "DELETE");
+
     if (data.statusCode != 200) {
         throw new Error("Failed to delete gym");
         return false;
@@ -62,19 +64,13 @@ export const deleteGymDetailById = async (gymId: number): Promise<boolean> => {
 
 export const updateGymDetails = async (updatedGym: any): Promise<boolean> => {
     try {
-        // Construct the URL with the gymId parameter
-        const res = await fetch(`${defaultUrl}/api/gym`, {
-            method: 'PUT', // Specify the HTTP method
-            headers: {
-                'Content-Type': 'application/json', // Specify that the body contains JSON
-            },
-            body: JSON.stringify(updatedGym), // Convert the updated gym object to JSON format
+        const data = await fetchWithAuth<any>(`api/gym`, "PUT", {
+            body: JSON.stringify(updatedGym)
         });
 
-        if (!res.ok) {
-            throw new Error("Failed to update gym details");
+        if (data.statusCode != 200) {
+            throw new Error("Failed to add gym details");
         }
-
         return true; // Return true if update was successful
     } catch (error) {
         return false; // Return false if there was an error
@@ -84,17 +80,11 @@ export const updateGymDetails = async (updatedGym: any): Promise<boolean> => {
 
 export const addGymDetails = async (updatedGym: any): Promise<boolean> => {
     try {
-        // Construct the URL with the gymId parameter
-        const res = await fetch(`${defaultUrl}/api/gym`, {
-            method: 'POST', // Specify the HTTP method
-            headers: {
-                'Content-Type': 'application/json', // Specify that the body contains JSON
-            },
-            body: JSON.stringify(updatedGym), // Convert the updated gym object to JSON format
+        const data = await fetchWithAuth<any>(`api/gym`, "POST", {
+            body: JSON.stringify(updatedGym)
         });
-
-        var data = await res.json();
-        if (!res.ok) {
+        
+        if (data.statusCode != 200) {
             throw new Error("Failed to update gym details");
         }
 
@@ -103,7 +93,4 @@ export const addGymDetails = async (updatedGym: any): Promise<boolean> => {
         return false; // Return false if there was an error
     }
 };
-
-
-
 

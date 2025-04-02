@@ -10,6 +10,11 @@ import React, { useState } from "react";
 export default function SignInForm() {
   const [showPassword, setShowPassword] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
+  
+  function handleSubmit(): void {
+    throw new Error("Function not implemented.");
+  }
+
   return (
     <div className="flex flex-col flex-1 lg:w-1/2 w-full">
       <div className="flex flex-col justify-center flex-1 w-full max-w-md mx-auto">
@@ -67,7 +72,7 @@ export default function SignInForm() {
                   </Link>
                 </div>
                 <div>
-                  <Button className="w-full" size="sm">
+                  <Button className="w-full" size="sm" onClick={handleSubmit}>
                     Sign in
                   </Button>
                 </div>

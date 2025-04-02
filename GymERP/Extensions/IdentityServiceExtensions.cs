@@ -52,7 +52,8 @@ namespace Extensions
 
             services.AddAuthorization(opt =>
             {
-                opt.AddPolicy("RequiredAdminRole", policy => policy.RequireRole("Admin"));
+                opt.AddPolicy("OnlyAdmin", policy => policy.RequireRole("Admin"));
+                opt.AddPolicy("RequiredGymAdmin", policy => policy.RequireRole("Admin", "GymAdmin"));
             });
 
             return services;

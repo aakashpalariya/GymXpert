@@ -29,6 +29,7 @@ namespace API.Controllers
         {
             var user = await _userManager.Users
                 .Include(p => p.UserPhotos)
+                .Include(p => p.UserGyms)
                 .SingleOrDefaultAsync(s => s.UserName == loginDto.UserName);
 
             if (user == null) return Unauthorized("Invalid username");
@@ -37,12 +38,23 @@ namespace API.Controllers
 
             if (!result) return Unauthorized("Invalid password");
 
+            var userGym = user.UserGyms.FirstOrDefault(s => s.IsActive);
+            int gymId = 0;
+            if (userGym != null)
+            {
+                gymId = userGym.GymId;
+            }
+
+            var token = await _tokenService.CreateToken(user, gymId);
+
+            
+
             return new UserDto
             {
                 Username = user.UserName,
-                Token = await _tokenService.CreateToken(user),
+                Token = token,
                 PhotoUrl = user.UserPhotos.FirstOrDefault(s => s.IsMain)?.Url,
-                Gender = user.Gender
+                FullName = $"{user.FirstName} {user.LastName}"
             };
         }
 
@@ -65,8 +77,7 @@ namespace API.Controllers
             return new UserDto
             {
                 Username = user.UserName,
-                Token = await _tokenService.CreateToken(user),
-                Gender = user.Gender
+                Token = await _tokenService.CreateToken(user, 0),
             };
         }
 

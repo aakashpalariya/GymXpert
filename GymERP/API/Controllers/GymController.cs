@@ -10,9 +10,11 @@ using Services.Interfaces;
 using Data.Entities;
 using API.Constants;
 using API.Response;
+using Microsoft.AspNetCore.Authorization;
 
 namespace API.Controllers
 {
+    [Authorize(Policy = "OnlyAdmin")]
     [Route("api/[controller]")]
     [ApiController]
     public class GymController : ControllerBase

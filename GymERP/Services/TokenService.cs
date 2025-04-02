@@ -18,12 +18,13 @@ namespace Services
             _userManager = userManager;
             _key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["TokenKey"]));
         }
-        public async Task<string> CreateToken(User user)
+        public async Task<string> CreateToken(User user, int gymId)
         {
             var claims = new List<Claim>
             {
                 new Claim(JwtRegisteredClaimNames.NameId, user.Id.ToString()),
-                new Claim(JwtRegisteredClaimNames.UniqueName, user.UserName)
+                new Claim(JwtRegisteredClaimNames.UniqueName, user.UserName),
+                new Claim("gym_id", gymId.ToString())
             };
 
             var roles = await _userManager.GetRolesAsync(user);

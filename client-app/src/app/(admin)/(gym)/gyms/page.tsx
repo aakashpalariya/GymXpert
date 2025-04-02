@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 import { useState, useEffect, use } from "react";
 import toast, { Toaster } from "react-hot-toast";
 
-export default function AddGym() {
+export default function GymList() {
 
     const [gyms, setGyms] = useState<Gym[]>([]);
     const [loading, setLoading] = useState<boolean>(true);

@@ -10,7 +10,7 @@ const nextConfig: NextConfig = {
     return config;
   },
   env: {
-    NEXT_PUBLIC_API_PATH: "https://localhost:5001",
+    NEXT_PUBLIC_API_PATH: "https://localhost:5001/",
   },
 };
 

@@ -13,6 +13,7 @@ import { useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 
 export default function AddGym() {
+
     const [address, setAddress] = useState("");
     const [planOption, setPlanOption] = useState<string>("Free");
 

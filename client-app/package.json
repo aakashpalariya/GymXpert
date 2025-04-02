@@ -34,6 +34,7 @@
     "react-dropzone": "^14.3.5",
     "react-flatpickr": "^3.10.13",
     "react-hot-toast": "^2.5.2",
+    "rxjs": "^7.8.2",
     "swiper": "^11.2.0",
     "tailwind-merge": "^2.6.0"
   },

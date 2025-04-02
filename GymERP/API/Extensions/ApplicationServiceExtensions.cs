@@ -19,7 +19,7 @@ namespace API.Extensions
             {
                 opt.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
             });
-            //services.AddScoped<ITokenService, TokenService>();
+            services.AddScoped<ITokenService, TokenService>();
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 

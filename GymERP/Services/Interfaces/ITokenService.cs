@@ -5,6 +5,6 @@ namespace Services.Interfaces
 {
     public interface ITokenService
     {
-        Task<string> CreateToken(User user);
+        Task<string> CreateToken(User user, int gymId);
     }
 }
