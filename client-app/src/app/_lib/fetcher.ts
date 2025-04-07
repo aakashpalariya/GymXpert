@@ -1,3 +1,5 @@
+import { getUserFromCookie } from "./auth";
+
 var BASE_URL = process.env.NEXT_PUBLIC_API_PATH;
 
 interface FetchOptions extends RequestInit {

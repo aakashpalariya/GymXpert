@@ -19,17 +19,8 @@ export const addNumbers = (a: number, b: number): number => {
 
   export async function getGyms() {
     const endpoint = `${process.env.NEXT_PUBLIC_API_PATH}api/gym`;
-    console.log(endpoint);
     const res = await fetch(endpoint);
-    // const res = await fetch(endpoint, {
-    //   method: 'get',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //     // 'API-Key': process.env.DATA_API_KEY,
-    //   },
-    // })
-    console.log("after" +res);
-
+   
     if(res.status == 200)
     {
       console.log("successs");

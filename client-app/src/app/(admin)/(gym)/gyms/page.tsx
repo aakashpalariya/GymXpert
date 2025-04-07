@@ -7,9 +7,9 @@ import { Table, TableBody, TableCell, TableHeader, TableRow } from "@/components
 import { useRouter } from "next/navigation";
 import { useState, useEffect, use } from "react";
 import toast, { Toaster } from "react-hot-toast";
+import { withAuth } from '@/components/auth/WithAuth';
 
-export default function GymList() {
-
+function GymList() {
     const [gyms, setGyms] = useState<Gym[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
@@ -28,7 +28,7 @@ export default function GymList() {
     };
 
     useEffect(() => {
-        
+
         loadGyms();
     }, []);
     if (loading) return <div>Loading...</div>;
@@ -53,7 +53,6 @@ export default function GymList() {
             setLoading(false);
         }
     }
-
     return (
         <div>
             <ComponentCard title="Gym Details" showButton={true} route="gym/add">
@@ -188,5 +187,6 @@ export default function GymList() {
             </ComponentCard>
             <Toaster />
         </div>
-    )
+    );
 }
+export default withAuth(GymList);

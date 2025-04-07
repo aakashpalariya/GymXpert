@@ -3,4 +3,5 @@ interface User {
     token: string;
     photoUrl: string;
     role: string;
+    gymId: string;
 }

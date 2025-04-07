@@ -1,8 +1,10 @@
-var defaultUrl = process.env.NEXT_PUBLIC_API_PATH;
+var baseUrl = process.env.NEXT_PUBLIC_API_PATH;
+import { destroyCookie } from 'nookies';
+import { setUserCookie } from '../_lib/auth';
 
 export const loginUser = async (model: any): Promise<User | null> => {
     try {
-        const res = await fetch(`${defaultUrl}/api/account/login`, {
+        const res = await fetch(`${baseUrl}api/account/login`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -18,7 +20,13 @@ export const loginUser = async (model: any): Promise<User | null> => {
         const data = await res.json();
 
         const user = setCurrentUser(data);
-
+        const mockUser = {
+            username: user.username,
+            token: user.token,
+            role: user.role,
+            gymId: user.gymId
+          };
+        setUserCookie(mockUser);
         return user;
     } catch (error) {
         console.error("Login error:", error); // Log the error for debugging
@@ -38,12 +46,7 @@ export const setCurrentUser = (user: User) : User=> {
     const roles = token?.role;
     console.log("roles " + roles);
     user.role = token?.role;
-
-    // if (Array.isArray(roles)) {
-    //     user.roles = roles;
-    // } else if (roles) {
-    //     user.roles.push(roles);
-    // }
+    user.gymId = token?.gym_id;
 
     localStorage.setItem('user', JSON.stringify(user));
     return user;
@@ -52,6 +55,8 @@ export const setCurrentUser = (user: User) : User=> {
 
 export const logoutUser = () => {
     localStorage.removeItem('user');
+    destroyCookie(null, 'user', { path: '/' });
+
 }
 
 export const getDecodedToken = (token: string) => {

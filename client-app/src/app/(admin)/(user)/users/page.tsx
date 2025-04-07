@@ -3,6 +3,7 @@ import { deleteGymDetailById, getGymDDL, getGymDetails } from "@/app/_services/g
 import { getMemberDetails } from "@/app/_services/member.service";
 import { getUserDetails } from "@/app/_services/user.service";
 import { formatDate } from "@/app/_utils/DateFormats";
+import { withAuth } from "@/components/auth/WithAuth";
 import ComponentCard from "@/components/common/ComponentCard";
 import Label from "@/components/form/Label";
 import Select from "@/components/form/Select";
@@ -14,7 +15,7 @@ import { useRouter } from "next/navigation";
 import { useState, useEffect, use } from "react";
 import toast, { Toaster } from "react-hot-toast";
 
-export default function AddGym() {
+function AddGym() {
 
     const [gymSelect, setGymSelect] = useState<SelectItem<string>[]>([]);
     const [members, setMembers] = useState<Member[]>([]);
@@ -61,13 +62,11 @@ export default function AddGym() {
 
     async function loadMemnber(id: string) {
         const data = await getMemberDetails(id);
-        console.log(data);
         setMembers(data);
 
     }
 
     function handleSelectGym(value: string): void {
-        console.log(value);
         setGym(value);
         loadMemnber(value);
     }
@@ -191,3 +190,5 @@ export default function AddGym() {
         </div>
     )
 }
+
+export default withAuth(AddGym);

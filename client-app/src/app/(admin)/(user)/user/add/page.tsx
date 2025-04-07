@@ -126,18 +126,10 @@ export default function AddGym() {
         console.log(value);
     }
 
-
-    // function handleDateChange(dates: Date[], currentDateString: string, self: Instance, data?: any): void {
-    //     console.log(data);
-    //     console.log(dates);
-    //     console.log(currentDateString);
-    //     console.log(self);
-    // }
-
-    const handleDateChange = (dates: Date[]) => {
-        setSelectedDate(dates);
-        console.log('Selected Date:', dates);
-    };
+    // const handleDateChange = (dates: Date[]) => {
+    //     setSelectedDate(dates);
+    //     console.log('Selected Date:', dates);
+    // };
 
     return (
         <div>
