@@ -1,0 +1,146 @@
+﻿[
+  {
+    "planId": 1,
+    "planName": "Free",
+    "monthlyPrice": 0,
+    "maxMembers": 10,
+    "maxGymAdmins": 1,
+    "features": "Basic Access",
+    "isActive": true,
+    "dateUpdated": "2025-04-12T00:00:00Z",
+    "durations": [
+      {
+        "durationId": 1,
+        "durationMonths": 1,
+        "discountPercent": 0,
+        "totalPrice": 0
+      },
+      {
+        "durationId": 2,
+        "durationMonths": 3,
+        "discountPercent": 0,
+        "totalPrice": 0
+      },
+      {
+        "durationId": 3,
+        "durationMonths": 6,
+        "discountPercent": 0,
+        "totalPrice": 0
+      },
+      {
+        "durationId": 4,
+        "durationMonths": 12,
+        "discountPercent": 0,
+        "totalPrice": 0
+      }
+    ]
+  },
+  {
+    "planId": 2,
+    "planName": "Base",
+    "monthlyPrice": 500,
+    "maxMembers": 50,
+    "maxGymAdmins": 2,
+    "features": "Basic,Chat,Reports",
+    "isActive": true,
+    "dateUpdated": "2025-04-12T00:00:00Z",
+    "durations": [
+      {
+        "durationId": 5,
+        "durationMonths": 1,
+        "discountPercent": 0,
+        "totalPrice": 500
+      },
+      {
+        "durationId": 6,
+        "durationMonths": 3,
+        "discountPercent": 20,
+        "totalPrice": 1200
+      },
+      {
+        "durationId": 7,
+        "durationMonths": 6,
+        "discountPercent": 30,
+        "totalPrice": 2100
+      },
+      {
+        "durationId": 8,
+        "durationMonths": 12,
+        "discountPercent": 40,
+        "totalPrice": 3600
+      }
+    ]
+  },
+  {
+    "planId": 3,
+    "planName": "Regular",
+    "monthlyPrice": 1500,
+    "maxMembers": 200,
+    "maxGymAdmins": 5,
+    "features": "Chat,Reports,Schedule",
+    "isActive": true,
+    "dateUpdated": "2025-04-12T00:00:00Z",
+    "durations": [
+      {
+        "durationId": 9,
+        "durationMonths": 1,
+        "discountPercent": 0,
+        "totalPrice": 1500
+      },
+      {
+        "durationId": 10,
+        "durationMonths": 3,
+        "discountPercent": 20,
+        "totalPrice": 3600
+      },
+      {
+        "durationId": 11,
+        "durationMonths": 6,
+        "discountPercent": 30,
+        "totalPrice": 6300
+      },
+      {
+        "durationId": 12,
+        "durationMonths": 12,
+        "discountPercent": 40,
+        "totalPrice": 10800
+      }
+    ]
+  },
+  {
+    "planId": 4,
+    "planName": "Premium",
+    "monthlyPrice": 2500,
+    "maxMembers": 500,
+    "maxGymAdmins": 10,
+    "features": "All Features,Priority Support",
+    "isActive": true,
+    "dateUpdated": "2025-04-12T00:00:00Z",
+    "durations": [
+      {
+        "durationId": 13,
+        "durationMonths": 1,
+        "discountPercent": 0,
+        "totalPrice": 2500
+      },
+      {
+        "durationId": 14,
+        "durationMonths": 3,
+        "discountPercent": 20,
+        "totalPrice": 6000
+      },
+      {
+        "durationId": 15,
+        "durationMonths": 6,
+        "discountPercent": 30,
+        "totalPrice": 10500
+      },
+      {
+        "durationId": 16,
+        "durationMonths": 12,
+        "discountPercent": 40,
+        "totalPrice": 18000
+      }
+    ]
+  }
+]

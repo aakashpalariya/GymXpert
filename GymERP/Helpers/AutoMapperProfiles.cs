@@ -1,12 +1,6 @@
 ﻿using AutoMapper;
 using Data.Entities;
 using Dtos;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Helpers
 {
@@ -32,6 +26,22 @@ namespace Helpers
             CreateMap<User, MemberDto>()
                 .ForMember(dest => dest.MemberId, opt => opt.MapFrom(src => src.Id))
                 .ForMember(dest => dest.DateOfBirth, opt => opt.MapFrom(src => src.DateOfBirth.ToDateTime(TimeOnly.MinValue)));
+
+            CreateMap<PlanDto, Plan>();
+            CreateMap<Plan, PlanDto>();
+            CreateMap<PlanDurationDto, PlanDuration>();
+            CreateMap<PlanDuration, PlanDurationDto>();
+
+            CreateMap<Country, MasterDto>();
+            CreateMap<MasterDto, Country>();
+
+            CreateMap<State, MasterDto>();
+            CreateMap<MasterDto, State>();
+
+            CreateMap<State, SelectOptionDto<string>>()
+                .ForMember(dest => dest.Value, opt => opt.MapFrom(src => src.Name))
+                .ForMember(dest => dest.Label, opt => opt.MapFrom(src => src.Name));
+
         }
     }
 }

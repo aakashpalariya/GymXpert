@@ -41,10 +41,9 @@ export const updateUserDetails = async (updatedMember: any): Promise<boolean> =>
     }
 };
 
-
-export const addUserDetails = async (member: any): Promise<boolean> => {
+export const addGymUser = async (member: Member, gymId: number): Promise<boolean> => {
     try {
-        const data = await fetchWithAuth<any>(`api/user`, "POST", {
+        const data = await fetchWithAuth<any>(`api/user/add-user/${gymId}`, "POST", {
             body: JSON.stringify(member)
         });
         return true;

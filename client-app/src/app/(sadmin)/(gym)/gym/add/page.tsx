@@ -8,9 +8,12 @@ import TextArea from "@/components/form/input/TextArea";
 import Label from "@/components/form/Label";
 import Select from "@/components/form/Select";
 import Button from "@/components/ui/button/Button";
+import { CalenderIcon } from "@/icons";
 import Link from "next/link";
 import { useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
+import Flatpickr from "react-flatpickr";
+import 'flatpickr/dist/flatpickr.min.css';
 
 export default function AddGym() {
 
@@ -23,6 +26,14 @@ export default function AddGym() {
     const [contactNumber, setContact] = useState("");
     const [email, setEmail] = useState("");
 
+    const [gender, setGender] = useState("");
+    const [fName, setFirstName] = useState("");
+    const [mName, setMiddleName] = useState("");
+    const [lName, setLastName] = useState("");
+    const [dob, setDOB] = useState<Date | null | string>("");
+    const [mobileNumber, setMobile] = useState("");
+    const [userEmail, setUserEmail] = useState("");
+
     const planChange = (value: string) => {
         setPlanOption(value);
     };
@@ -33,10 +44,28 @@ export default function AddGym() {
         { value: "Uttar Pradesh", label: "Uttar Pradesh" },
     ];
 
+    const genders = [
+        { value: "Male", label: "Male" },
+        { value: "Female", label: "Female" },
+        { value: "Other", label: "Other" },
+    ];
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        const isAdded = await addGymDetails({ name, address, city, state, contactNumber, email }); // Call the update function
-        if (isAdded) {
+        const gym: Gym = {
+            gymId: 0,
+            name: name,
+            address: address,
+            city: city,
+            state: state,
+            contactNumber: contactNumber,
+            email: email,
+            isActive: true,
+            isDeleted: false,
+            joinedDate: null
+        };
+        const gymId = await addGymDetails(gym);
+        if (gymId > 0) {
             toast.success('Gym details added successfully!');
         } else {
             toast.error('Failed to add gym details!');
@@ -46,6 +75,10 @@ export default function AddGym() {
     const handleSelectState = (value: string) => {
         setState(value);
     };
+
+    function handleGenderState(value: string): void {
+        setGender(value);
+    }
 
     return (
         <div>
@@ -99,46 +132,103 @@ export default function AddGym() {
                                 </div>
                             </div>
                         </div>
+
+
                         <div className="grid gap-6 sm:grid-cols-12">
-                            {/* <div className="grid gap-6 sm:col-span-12">
-                            <div className="flex items-center gap-3 col-span-full">
-                                <Label className="m-0">Membership:</Label>
-                                <div className="flex flex-wrap items-center gap-4">
-                                    <Radio
-                                        id="Free"
-                                        name="planSelect"
-                                        value="Free"
-                                        label="Free"
-                                        checked={planOption === "Free"}
-                                        onChange={planChange}
-                                    />
-                                    <Radio
-                                        id="Base"
-                                        name="planSelect"
-                                        value="Base"
-                                        label="Base"
-                                        checked={planOption === "Base"}
-                                        onChange={planChange}
-                                    />
-                                    <Radio
-                                        id="Ragular"
-                                        name="planSelect"
-                                        value="Ragular"
-                                        label="Ragular"
-                                        checked={planOption === "Ragular"}
-                                        onChange={planChange}
-                                    />
-                                    <Radio
-                                        id="Premium"
-                                        name="planSelect"
-                                        value="Premium"
-                                        label="Premium"
-                                        checked={planOption === "Premium"}
-                                        onChange={planChange}
-                                    />
+                            <div className="grid gap-6 sm:col-span-12">
+                                <div className="flex items-center gap-3 col-span-full">
+                                    <Label className="m-0">Select Plan:</Label>
+                                    <div className="flex flex-wrap items-center gap-4">
+                                        <Radio
+                                            id="Free"
+                                            name="planSelect"
+                                            value="Free"
+                                            label="Free"
+                                            checked={planOption === "Free"}
+                                            onChange={planChange}
+                                        />
+                                        <Radio
+                                            id="Base"
+                                            name="planSelect"
+                                            value="Base"
+                                            label="Base"
+                                            checked={planOption === "Base"}
+                                            onChange={planChange}
+                                        />
+                                        <Radio
+                                            id="Ragular"
+                                            name="planSelect"
+                                            value="Ragular"
+                                            label="Ragular"
+                                            checked={planOption === "Ragular"}
+                                            onChange={planChange}
+                                        />
+                                        <Radio
+                                            id="Premium"
+                                            name="planSelect"
+                                            value="Premium"
+                                            label="Premium"
+                                            checked={planOption === "Premium"}
+                                            onChange={planChange}
+                                        />
+                                    </div>
                                 </div>
                             </div>
-                        </div> */}
+                        </div>
+                        <hr />
+                        <div className="grid gap-6 sm:grid-cols-12">
+                            <div className="grid gap-6 sm:col-span-12">
+                                <h3 className="text-2xl font-medium text-gray-800 dark:text-white/90">Gym Admin</h3>
+                            </div>
+                        </div>
+                        <div className="grid gap-6 sm:grid-cols-4">
+                            <div>
+                                <Label htmlFor="gymFirstName">First Name</Label>
+                                <Input type="text" value={fName} placeholder="First name" id="gymFirstName" onChange={(e) => setFirstName(e.target.value)} />
+                            </div>
+                            <div>
+                                <Label htmlFor="gymMName">Middle Name</Label>
+                                <Input type="text" value={mName} placeholder="First name" id="gymMName" onChange={(e) => setMiddleName(e.target.value)} />
+                            </div>
+                            <div>
+                                <Label htmlFor="gymLName">Last Name</Label>
+                                <Input type="text" value={lName} placeholder="First name" id="gymLName" onChange={(e) => setLastName(e.target.value)} />
+                            </div>
+                            <div>
+                                <Label htmlFor="gender">Gender</Label>
+                                <Select
+                                    options={genders}
+                                    placeholder="--Select Gender--"
+                                    onChange={handleGenderState}
+                                    defaultValue={gender}
+                                    className="bg-gray-50 dark:bg-gray-800"
+                                />
+                            </div>
+                        </div>
+                        <div className="grid gap-6 sm:grid-cols-3">
+                            <div>
+                                <Label htmlFor="datePicker">Date of Birth</Label>
+                                <div className="relative">
+                                    <Flatpickr
+                                        className="h-11 w-full rounded-lg border appearance-none px-4 py-2.5 text-sm shadow-theme-xs placeholder:text-gray-400 focus:outline-hidden focus:ring-3 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800  bg-transparent text-gray-800 border-gray-300 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:focus:border-brand-800"
+                                        value={dob || undefined}
+                                        placeholder="Date of birth"
+                                        onChange={(selectedDate) => setDOB(selectedDate[0])}
+                                        options={{ dateFormat: 'd M, Y' }}
+                                    />
+                                    <span className="absolute text-gray-500 -translate-y-1/2 pointer-events-none right-3 top-1/2 dark:text-gray-400">
+                                        <CalenderIcon />
+                                    </span>
+                                </div>
+                            </div>
+                            <div>
+                                <Label htmlFor="contact">Mobile Number</Label>
+                                <Input type="text" value={mobileNumber} placeholder="9876543210" id="contact" onChange={(e) => setMobile(e.target.value)} />
+                            </div>
+                            <div>
+                                <Label htmlFor="email">Email</Label>
+                                <Input type="text" value={userEmail} placeholder="info@yourgym.com" id="email" onChange={(e) => setUserEmail(e.target.value)} />
+                            </div>
                         </div>
                         <div className="grid gap-6 sm:grid-cols-12">
                             <div className="grid gap-6 sm:col-span-12">

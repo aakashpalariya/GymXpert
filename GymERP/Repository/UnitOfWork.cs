@@ -19,9 +19,11 @@ namespace Repository
             _userManager = userManager;
             _roleManager = roleManager;
         }
-        public IUserRepository UserRepository => new UserRepository(_context, _mapper);
+        public IUserRepository UserRepository => new UserRepository(_context, _mapper, _userManager);
         public IGymRepository GymRepository => new GymRepository(_context, _mapper);
         public IMemeberRepository MemeberRepository => new MemeberRepository(_context, _mapper, _userManager, _roleManager);
+        public IPlanRepository PlanRepository => new PlanRepository(_context, _mapper);
+        public IMasterRepository MasterRepository => new MasterRepository(_context, _mapper);
 
         public async Task<bool> Complete()
         {

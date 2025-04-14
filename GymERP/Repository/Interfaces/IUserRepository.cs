@@ -16,5 +16,6 @@ namespace Repository.Interfaces
         Task<string> GetUserGender(string username);
         Task<User> GetUserByPhotoId(int photoId);
         Task<bool> CheckUsername(string userName);
+        Task<bool> CreateGymAdminAsync(MemberDto member, int gymId);
     }
 }

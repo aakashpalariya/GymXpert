@@ -49,5 +49,16 @@ namespace API.Controllers
             }
             return BadRequest(new ApiResponse<bool>(statusCode: (int)StatusCodeEnum.BadRequest, message: "User Name is taken", data: false));
         }
+
+        [HttpPost("add-user/{gymId}")]
+        public async Task<ActionResult<List<MemberDto>>> AddGymAdmin([FromBody] MemberDto member, int gymId)
+        {
+            await _uow.UserRepository.CreateGymAdminAsync(member, gymId);
+            if (await _uow.Complete())
+            {
+                return Ok(new ApiResponse<object>(statusCode: (int)StatusCodeEnum.OK, message: "Gym admin added successfully!", data: null));
+            }
+            return BadRequest(new ApiResponse<object>(statusCode: (int)StatusCodeEnum.BadRequest, message: "Failed to add gym admin!", data: null));
+        }
     }
 }

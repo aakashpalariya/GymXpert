@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace Data.Entities
 {
     [Table("GymSubscriptions")]
-    public class GymSubscription
+    public class GymPlan
     {
         public int GymId { get; set; } // Foreign key to Gym table
         public int PlanId { get; set; } // Foreign key to SubscriptionPlans table
@@ -17,12 +17,11 @@ namespace Data.Entities
         public string PaymentStatus { get; set; } = "Pending";
         public bool AutoRenewal { get; set; } = false;
         public bool IsActive { get; set; } = true;
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-        public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
+        public DateTime DateUpdated { get; set; } = DateTime.UtcNow;
 
         // Navigation Properties (EF Relations)
         public Gym Gym { get; set; }
-        public SubscriptionPlan SubscriptionPlan { get; set; }
+        public Plan Plan { get; set; }
     }
 
 }

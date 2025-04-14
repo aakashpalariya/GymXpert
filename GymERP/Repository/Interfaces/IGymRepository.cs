@@ -1,4 +1,5 @@
-﻿using Dtos;
+﻿using Data.Entities;
+using Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace Repository.Interfaces
 {
     public interface IGymRepository
     {
-        Task AddGymAsync(GymDto gymDto);
+        Task<Gym> AddGymAsync(GymDto gymDto);
         Task<bool> UpdateGymAsync(GymDto gymDto);
         Task<List<GymDto>> GetGymsAsync();
         Task<GymDto> GetGymByIdAsync(int id);

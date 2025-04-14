@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20250330061008_initialMigration")]
+    [Migration("20250412053901_initialMigration")]
     partial class initialMigration
     {
         /// <inheritdoc />
@@ -85,7 +85,7 @@ namespace Data.Migrations
                     b.ToTable("Gyms");
                 });
 
-            modelBuilder.Entity("Data.Entities.GymSubscription", b =>
+            modelBuilder.Entity("Data.Entities.GymPlan", b =>
                 {
                     b.Property<int>("GymId")
                         .HasColumnType("int");
@@ -96,7 +96,7 @@ namespace Data.Migrations
                     b.Property<bool>("AutoRenewal")
                         .HasColumnType("bit");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime>("DateUpdated")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("EndDate")
@@ -114,14 +114,77 @@ namespace Data.Migrations
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime2");
-
                     b.HasKey("GymId", "PlanId");
 
                     b.HasIndex("PlanId");
 
                     b.ToTable("GymSubscriptions");
+                });
+
+            modelBuilder.Entity("Data.Entities.Plan", b =>
+                {
+                    b.Property<int>("PlanId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PlanId"));
+
+                    b.Property<DateTime>("DateUpdated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Features")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("MaxGymAdmins")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MaxMembers")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("MonthlyPrice")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("PlanName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("PlanId");
+
+                    b.ToTable("Plans");
+                });
+
+            modelBuilder.Entity("Data.Entities.PlanDuration", b =>
+                {
+                    b.Property<int>("DurationId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DurationId"));
+
+                    b.Property<decimal>("DiscountPercent")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("DurationMonths")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PlanId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("TotalPrice")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("DurationId");
+
+                    b.HasIndex("PlanId");
+
+                    b.ToTable("PlanDuration");
                 });
 
             modelBuilder.Entity("Data.Entities.Role", b =>
@@ -152,49 +215,6 @@ namespace Data.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("Roles", (string)null);
-                });
-
-            modelBuilder.Entity("Data.Entities.SubscriptionPlan", b =>
-                {
-                    b.Property<int>("PlanId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PlanId"));
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("Duration")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Features")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("MaxGymAdmins")
-                        .HasColumnType("int");
-
-                    b.Property<int>("MaxMembers")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("Price")
-                        .HasPrecision(18, 2)
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("PlanId");
-
-                    b.ToTable("SubscriptionPlans");
                 });
 
             modelBuilder.Entity("Data.Entities.User", b =>
@@ -465,7 +485,7 @@ namespace Data.Migrations
                     b.ToTable("UserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("Data.Entities.GymSubscription", b =>
+            modelBuilder.Entity("Data.Entities.GymPlan", b =>
                 {
                     b.HasOne("Data.Entities.Gym", "Gym")
                         .WithMany()
@@ -473,7 +493,7 @@ namespace Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Data.Entities.SubscriptionPlan", "SubscriptionPlan")
+                    b.HasOne("Data.Entities.Plan", "Plan")
                         .WithMany()
                         .HasForeignKey("PlanId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -481,7 +501,18 @@ namespace Data.Migrations
 
                     b.Navigation("Gym");
 
-                    b.Navigation("SubscriptionPlan");
+                    b.Navigation("Plan");
+                });
+
+            modelBuilder.Entity("Data.Entities.PlanDuration", b =>
+                {
+                    b.HasOne("Data.Entities.Plan", "Plan")
+                        .WithMany("Durations")
+                        .HasForeignKey("PlanId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Plan");
                 });
 
             modelBuilder.Entity("Data.Entities.UserGym", b =>
@@ -572,6 +603,11 @@ namespace Data.Migrations
             modelBuilder.Entity("Data.Entities.Gym", b =>
                 {
                     b.Navigation("UserGyms");
+                });
+
+            modelBuilder.Entity("Data.Entities.Plan", b =>
+                {
+                    b.Navigation("Durations");
                 });
 
             modelBuilder.Entity("Data.Entities.Role", b =>

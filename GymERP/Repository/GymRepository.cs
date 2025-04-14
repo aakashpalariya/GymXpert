@@ -23,10 +23,11 @@ namespace Repository
             _mapper = mapper;
         }
 
-        public async Task AddGymAsync(GymDto gymDto)
+        public async Task<Gym> AddGymAsync(GymDto gymDto)
         {
             var gym = _mapper.Map<Gym>(gymDto);
             await _context.Gyms.AddAsync(gym);
+            return gym;
         }
         public async Task AddUserGymAsync(int userId, int gymId)
         {

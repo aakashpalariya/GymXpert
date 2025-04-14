@@ -36,12 +36,13 @@ export const deleteGymDetailById = async (gymId: number): Promise<boolean> => {
     return true;
 };
 
-export const updateGymDetails = async (updatedGym: any): Promise<boolean> => {
+export const updateGymDetails = async (gym: Gym): Promise<boolean> => {
     try {
         const data = await fetchWithAuth<any>(`api/gym`, "PUT", {
-            body: JSON.stringify(updatedGym)
+            body: JSON.stringify(gym)
         });
 
+        console.log(await data);
         if (data.statusCode != 200) {
             throw new Error("Failed to add gym details");
         }
@@ -52,19 +53,14 @@ export const updateGymDetails = async (updatedGym: any): Promise<boolean> => {
 };
 
 
-export const addGymDetails = async (updatedGym: any): Promise<boolean> => {
-    try {
+export const addGymDetails = async (gym: Gym): Promise<number> => {
         const data = await fetchWithAuth<any>(`api/gym`, "POST", {
-            body: JSON.stringify(updatedGym)
+            body: JSON.stringify(gym)
         });
         
         if (data.statusCode != 200) {
             throw new Error("Failed to update gym details");
         }
-
-        return true;
-    } catch (error) {
-        return false;
-    }
+        return data.data;
 };
 

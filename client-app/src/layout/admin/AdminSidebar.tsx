@@ -17,6 +17,7 @@ import {
   TableIcon,
   UserCircleIcon,
   BoltIcon,
+  VideoIcon
 } from "../../icons/index";
 
 type NavItem = {
@@ -38,17 +39,17 @@ const navItems: NavItem[] = [
     path: "/gyms",
   },
   {
-    icon: <UserCircleIcon />,
-    name: "Users",
-    path: "/users",
-  },
-  {
-    name: "Pages",
+    name: "Masters",
     icon: <PageIcon />,
     subItems: [
-      { name: "Page 1", path: "/blank" },
-      { name: "Page 2", path: "/blank" },
+      { name: "Country", path: "/blank" },
+      { name: "State", path: "/state" },
     ],
+  },
+  {
+    icon: <VideoIcon />,
+    name: "Plan",
+    path: "/plan",
   },
   {
     icon: <BoxCubeIcon />,

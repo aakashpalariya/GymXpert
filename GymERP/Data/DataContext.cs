@@ -12,10 +12,13 @@ namespace Data
         {
         }
         public DbSet<UserPhoto> UserPhotos { get; set; }
-        public DbSet<SubscriptionPlan> SubscriptionPlans { get; set; }
+        public DbSet<Plan> Plans { get; set; }
+        public DbSet<PlanDuration> PlanDuration { get; set; }
         public DbSet<Gym> Gyms { get; set; }
-        public DbSet<GymSubscription> GymSubscriptions { get; set; }
+        public DbSet<GymPlan> GymPlan { get; set; }
         public DbSet<UserGym> UserGyms { get; set; }
+        public DbSet<Country> Countries { get; set; }
+        public DbSet<State> States { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -53,20 +56,20 @@ namespace Data
             modelBuilder.Entity<IdentityRoleClaim<int>>().ToTable("RoleClaims");
             modelBuilder.Entity<IdentityUserToken<int>>().ToTable("UserTokens");
 
-            modelBuilder.Entity<GymSubscription>()
+            modelBuilder.Entity<GymPlan>()
                 .HasKey(gs => new { gs.GymId, gs.PlanId });
 
-            modelBuilder.Entity<GymSubscription>()
+            modelBuilder.Entity<GymPlan>()
                 .HasOne(gs => gs.Gym)
                 .WithMany()
                 .HasForeignKey(gs => gs.GymId);
 
-            modelBuilder.Entity<GymSubscription>()
-                .HasOne(gs => gs.SubscriptionPlan)
+            modelBuilder.Entity<GymPlan>()
+                .HasOne(gs => gs.Plan)
                 .WithMany()
                 .HasForeignKey(gs => gs.PlanId);
 
-            modelBuilder.Entity<GymSubscription>()
+            modelBuilder.Entity<GymPlan>()
                 .Property(gs => gs.IsActive)
                 .HasDefaultValue(true);
 
@@ -98,6 +101,32 @@ namespace Data
             modelBuilder.Entity<UserGym>()
                 .Property(u => u.IsActive)
                 .HasDefaultValue(true);
+
+            modelBuilder.Entity<Plan>()
+                .HasMany(p => p.Durations)
+                .WithOne(d => d.Plan)
+                .HasForeignKey(d => d.PlanId);
+
+            modelBuilder.Entity<Country>()
+                .Property(gs => gs.IsActive)
+                .HasDefaultValue(true);
+
+            modelBuilder.Entity<Country>()
+                .Property(gs => gs.IsDeleted)
+                .HasDefaultValue(false);
+
+            modelBuilder.Entity<State>()
+                .Property(gs => gs.IsActive)
+                .HasDefaultValue(true);
+
+            modelBuilder.Entity<State>()
+                .Property(gs => gs.IsDeleted)
+                .HasDefaultValue(false);
+
+            modelBuilder.Entity<State>()
+                .HasOne(s => s.Country)
+                .WithMany(c => c.States)
+                .HasForeignKey(s => s.CountryId);
 
         }
     }

@@ -7,6 +7,8 @@ using Dtos;
 using Helpers;
 using Dtos.Params;
 using Data.Entities;
+using Extensions;
+using Microsoft.AspNetCore.Identity;
 
 namespace Repository
 {
@@ -14,11 +16,13 @@ namespace Repository
     {
         private readonly DataContext _context;
         private readonly IMapper _mapper;
+        private readonly UserManager<User> _userManager;
 
-        public UserRepository(DataContext context, IMapper mapper)
+        public UserRepository(DataContext context, IMapper mapper, UserManager<User> userManager)
         {
             _context = context;
             _mapper = mapper;
+            _userManager = userManager;
         }
 
         public async Task<MemberDto> GetMemberAsync(string username, bool isCurrentUser)
@@ -98,6 +102,28 @@ namespace Repository
             .IgnoreQueryFilters()
             .Where(p => p.UserPhotos.Any(p => p.PhotoId == photoId))
             .FirstOrDefaultAsync();
+        }
+
+        public async Task<bool> CreateGymAdminAsync(MemberDto member, int gymId)
+        {
+            var user = _mapper.Map<User>(member);
+            user.UserName = StringExtension.GenerateRandomAlphanumeric(8);
+            var result = await _userManager.CreateAsync(user, user.FirstName + "@123");
+
+            await _userManager.AddToRoleAsync(user, "GymAdmin");
+
+            if (result.Succeeded)
+            {
+                await _context.UserGyms.AddAsync(new UserGym()
+                {
+                    GymId = gymId,
+                    UserId = user.Id,
+                    IsActive = true
+                });
+
+                return true;
+            }
+            return false;
         }
     }
 }

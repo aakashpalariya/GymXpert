@@ -47,10 +47,10 @@ namespace API.Controllers
         [HttpPost("")]
         public async Task<ActionResult> AddGym([FromBody] GymDto gym)
         {
-            await _uow.GymRepository.AddGymAsync(gym);
+            var data = await _uow.GymRepository.AddGymAsync(gym);
             if(await _uow.Complete())
             {
-                return Ok(new ApiResponse<object>(statusCode: (int)StatusCodeEnum.OK, message: "Gym details added successfully!", data: null));
+                return Ok(new ApiResponse<object>(statusCode: (int)StatusCodeEnum.OK, message: "Gym details added successfully!", data: data.GymId));
             }
             return BadRequest(new ApiResponse<object>(statusCode: (int)StatusCodeEnum.BadRequest, message: "Failed to add Gym!", data: null));
         }

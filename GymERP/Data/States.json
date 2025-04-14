@@ -1,0 +1,327 @@
+﻿[
+  {
+    "Id": 0,
+    "CountryId": 1,
+    "Code": "AP",
+    "Name": "Andhra Pradesh",
+    "IsActive": true,
+    "IsDeleted": false,
+    "ModifiedDate": "2025-04-13T00:00:00"
+  },
+  {
+    "Id": 0,
+    "CountryId": 1,
+    "Code": "AR",
+    "Name": "Arunachal Pradesh",
+    "IsActive": true,
+    "IsDeleted": false,
+    "ModifiedDate": "2025-04-13T00:00:00"
+  },
+  {
+    "Id": 0,
+    "CountryId": 1,
+    "Code": "AS",
+    "Name": "Assam",
+    "IsActive": true,
+    "IsDeleted": false,
+    "ModifiedDate": "2025-04-13T00:00:00"
+  },
+  {
+    "Id": 0,
+    "CountryId": 1,
+    "Code": "BR",
+    "Name": "Bihar",
+    "IsActive": true,
+    "IsDeleted": false,
+    "ModifiedDate": "2025-04-13T00:00:00"
+  },
+  {
+    "Id": 0,
+    "CountryId": 1,
+    "Code": "CT",
+    "Name": "Chhattisgarh",
+    "IsActive": true,
+    "IsDeleted": false,
+    "ModifiedDate": "2025-04-13T00:00:00"
+  },
+  {
+    "Id": 0,
+    "CountryId": 1,
+    "Code": "GA",
+    "Name": "Goa",
+    "IsActive": true,
+    "IsDeleted": false,
+    "ModifiedDate": "2025-04-13T00:00:00"
+  },
+  {
+    "Id": 0,
+    "CountryId": 1,
+    "Code": "GJ",
+    "Name": "Gujarat",
+    "IsActive": true,
+    "IsDeleted": false,
+    "ModifiedDate": "2025-04-13T00:00:00"
+  },
+  {
+    "Id": 0,
+    "CountryId": 1,
+    "Code": "HR",
+    "Name": "Haryana",
+    "IsActive": true,
+    "IsDeleted": false,
+    "ModifiedDate": "2025-04-13T00:00:00"
+  },
+  {
+    "Id": 0,
+    "CountryId": 1,
+    "Code": "HP",
+    "Name": "Himachal Pradesh",
+    "IsActive": true,
+    "IsDeleted": false,
+    "ModifiedDate": "2025-04-13T00:00:00"
+  },
+  {
+    "Id": 0,
+    "CountryId": 1,
+    "Code": "JH",
+    "Name": "Jharkhand",
+    "IsActive": true,
+    "IsDeleted": false,
+    "ModifiedDate": "2025-04-13T00:00:00"
+  },
+  {
+    "Id": 0,
+    "CountryId": 1,
+    "Code": "KA",
+    "Name": "Karnataka",
+    "IsActive": true,
+    "IsDeleted": false,
+    "ModifiedDate": "2025-04-13T00:00:00"
+  },
+  {
+    "Id": 0,
+    "CountryId": 1,
+    "Code": "KL",
+    "Name": "Kerala",
+    "IsActive": true,
+    "IsDeleted": false,
+    "ModifiedDate": "2025-04-13T00:00:00"
+  },
+  {
+    "Id": 0,
+    "CountryId": 1,
+    "Code": "MP",
+    "Name": "Madhya Pradesh",
+    "IsActive": true,
+    "IsDeleted": false,
+    "ModifiedDate": "2025-04-13T00:00:00"
+  },
+  {
+    "Id": 0,
+    "CountryId": 1,
+    "Code": "MH",
+    "Name": "Maharashtra",
+    "IsActive": true,
+    "IsDeleted": false,
+    "ModifiedDate": "2025-04-13T00:00:00"
+  },
+  {
+    "Id": 0,
+    "CountryId": 1,
+    "Code": "MN",
+    "Name": "Manipur",
+    "IsActive": true,
+    "IsDeleted": false,
+    "ModifiedDate": "2025-04-13T00:00:00"
+  },
+  {
+    "Id": 0,
+    "CountryId": 1,
+    "Code": "ML",
+    "Name": "Meghalaya",
+    "IsActive": true,
+    "IsDeleted": false,
+    "ModifiedDate": "2025-04-13T00:00:00"
+  },
+  {
+    "Id": 0,
+    "CountryId": 1,
+    "Code": "MZ",
+    "Name": "Mizoram",
+    "IsActive": true,
+    "IsDeleted": false,
+    "ModifiedDate": "2025-04-13T00:00:00"
+  },
+  {
+    "Id": 0,
+    "CountryId": 1,
+    "Code": "NL",
+    "Name": "Nagaland",
+    "IsActive": true,
+    "IsDeleted": false,
+    "ModifiedDate": "2025-04-13T00:00:00"
+  },
+  {
+    "Id": 0,
+    "CountryId": 1,
+    "Code": "OR",
+    "Name": "Odisha",
+    "IsActive": true,
+    "IsDeleted": false,
+    "ModifiedDate": "2025-04-13T00:00:00"
+  },
+  {
+    "Id": 0,
+    "CountryId": 1,
+    "Code": "PB",
+    "Name": "Punjab",
+    "IsActive": true,
+    "IsDeleted": false,
+    "ModifiedDate": "2025-04-13T00:00:00"
+  },
+  {
+    "Id": 0,
+    "CountryId": 1,
+    "Code": "RJ",
+    "Name": "Rajasthan",
+    "IsActive": true,
+    "IsDeleted": false,
+    "ModifiedDate": "2025-04-13T00:00:00"
+  },
+  {
+    "Id": 0,
+    "CountryId": 1,
+    "Code": "SK",
+    "Name": "Sikkim",
+    "IsActive": true,
+    "IsDeleted": false,
+    "ModifiedDate": "2025-04-13T00:00:00"
+  },
+  {
+    "Id": 0,
+    "CountryId": 1,
+    "Code": "TN",
+    "Name": "Tamil Nadu",
+    "IsActive": true,
+    "IsDeleted": false,
+    "ModifiedDate": "2025-04-13T00:00:00"
+  },
+  {
+    "Id": 0,
+    "CountryId": 1,
+    "Code": "TG",
+    "Name": "Telangana",
+    "IsActive": true,
+    "IsDeleted": false,
+    "ModifiedDate": "2025-04-13T00:00:00"
+  },
+  {
+    "Id": 0,
+    "CountryId": 1,
+    "Code": "TR",
+    "Name": "Tripura",
+    "IsActive": true,
+    "IsDeleted": false,
+    "ModifiedDate": "2025-04-13T00:00:00"
+  },
+  {
+    "Id": 0,
+    "CountryId": 1,
+    "Code": "UP",
+    "Name": "Uttar Pradesh",
+    "IsActive": true,
+    "IsDeleted": false,
+    "ModifiedDate": "2025-04-13T00:00:00"
+  },
+  {
+    "Id": 0,
+    "CountryId": 1,
+    "Code": "UK",
+    "Name": "Uttarakhand",
+    "IsActive": true,
+    "IsDeleted": false,
+    "ModifiedDate": "2025-04-13T00:00:00"
+  },
+  {
+    "Id": 0,
+    "CountryId": 1,
+    "Code": "WB",
+    "Name": "West Bengal",
+    "IsActive": true,
+    "IsDeleted": false,
+    "ModifiedDate": "2025-04-13T00:00:00"
+  },
+
+  {
+    "Id": 0,
+    "CountryId": 1,
+    "Code": "AN",
+    "Name": "Andaman and Nicobar Islands",
+    "IsActive": true,
+    "IsDeleted": false,
+    "ModifiedDate": "2025-04-13T00:00:00"
+  },
+  {
+    "Id": 0,
+    "CountryId": 1,
+    "Code": "CH",
+    "Name": "Chandigarh",
+    "IsActive": true,
+    "IsDeleted": false,
+    "ModifiedDate": "2025-04-13T00:00:00"
+  },
+  {
+    "Id": 0,
+    "CountryId": 1,
+    "Code": "DN",
+    "Name": "Dadra and Nagar Haveli and Daman and Diu",
+    "IsActive": true,
+    "IsDeleted": false,
+    "ModifiedDate": "2025-04-13T00:00:00"
+  },
+  {
+    "Id": 0,
+    "CountryId": 1,
+    "Code": "DL",
+    "Name": "Delhi",
+    "IsActive": true,
+    "IsDeleted": false,
+    "ModifiedDate": "2025-04-13T00:00:00"
+  },
+  {
+    "Id": 0,
+    "CountryId": 1,
+    "Code": "JK",
+    "Name": "Jammu and Kashmir",
+    "IsActive": true,
+    "IsDeleted": false,
+    "ModifiedDate": "2025-04-13T00:00:00"
+  },
+  {
+    "Id": 0,
+    "CountryId": 1,
+    "Code": "LA",
+    "Name": "Ladakh",
+    "IsActive": true,
+    "IsDeleted": false,
+    "ModifiedDate": "2025-04-13T00:00:00"
+  },
+  {
+    "Id": 0,
+    "CountryId": 1,
+    "Code": "LD",
+    "Name": "Lakshadweep",
+    "IsActive": true,
+    "IsDeleted": false,
+    "ModifiedDate": "2025-04-13T00:00:00"
+  },
+  {
+    "Id": 0,
+    "CountryId": 1,
+    "Code": "PY",
+    "Name": "Puducherry",
+    "IsActive": true,
+    "IsDeleted": false,
+    "ModifiedDate": "2025-04-13T00:00:00"
+  }
+]

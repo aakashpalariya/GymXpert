@@ -87,10 +87,21 @@ export default function UpdateGym({
     };
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        const updatedGym = { gymId: gymIdNumber, name, address, email, isActive, isDeleted, state, city, contactNumber, joinedDate };
+        const gym: Gym = {
+            gymId: gymIdNumber,
+            name: name,
+            address: address,
+            city: city,
+            state: state,
+            contactNumber: contactNumber,
+            email: email,
+            isActive: isActive,
+            isDeleted: isDeleted,
+            joinedDate: joinedDate
+        };
 
-        setGym(updatedGym);
-        const isUpdated = await updateGymDetails(updatedGym); // Call the update function
+        setGym(gym);
+        const isUpdated = await updateGymDetails(gym); // Call the update function
 
         if (isUpdated) {
             toast.success('Gym details updated successfully!', {

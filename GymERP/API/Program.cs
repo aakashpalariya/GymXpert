@@ -5,6 +5,8 @@ using Data.Entities;
 using Extensions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Repository;
+using System;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -43,6 +45,8 @@ try
     var context = services.GetRequiredService<DataContext>();
     await context.Database.MigrateAsync(); 
     await Seed.SeedUsers(userManager, roleManager);
+    await Seed.SeedPlans(context);
+    await Seed.SeedStates(context);
 }
 catch (Exception ex)
 {
