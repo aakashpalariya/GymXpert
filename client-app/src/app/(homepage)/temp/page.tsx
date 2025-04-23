@@ -29,7 +29,7 @@ export default function HomePage() {
       gymLogo: null,
     }
   });
-    const [state, setState] = useState("");
+  const [state, setState] = useState("");
 
   const handleSelectState = (value: string) => {
     setState(value);
@@ -52,54 +52,58 @@ export default function HomePage() {
       };
     });
   };
-  
+
 
   const handleFinish = async () => {
-    const formData = new FormData();
-  
-    formData.append('fee', wizard.operatingDetails.fee.toString());
-    formData.append('days', JSON.stringify(wizard.operatingDetails.days));
-    formData.append('morningOpen', wizard.operatingDetails.morningOpen);
-    formData.append('morningClose', wizard.operatingDetails.morningClose);
-    formData.append('eveningOpen', wizard.operatingDetails.eveningOpen);
-    formData.append('eveningClose', wizard.operatingDetails.eveningClose);
-  
-    if (wizard.gymDoc.gymLogo) {
-      formData.append('gymLogo', wizard.gymDoc.gymLogo);
+    if (canFinish) {
+
+      const formData = new FormData();
+
+      formData.append('fee', wizard.operatingDetails.fee.toString());
+      wizard.operatingDetails.days.forEach(day => {
+        formData.append('Days', day);  // 'Days' is the field name in C#
+      });
+      formData.append('morningOpen', wizard.operatingDetails.morningOpen);
+      formData.append('morningClose', wizard.operatingDetails.morningClose);
+
+      if (wizard.gymDoc.gymLogo) {
+        formData.append('gymLogo', wizard.gymDoc.gymLogo);
+      }
+
+      //Debug: log keys and values
+      for (const pair of formData.entries()) {
+        console.log(pair[0], pair[1]);
+      }
+
+      const response = await fetch('https://localhost:5001/api/gym/register', {
+        method: 'POST',
+        body: formData,
+      });
+
     }
-  
-    // Debug: log keys and values
-    // for (const pair of formData.entries()) {
-    //   console.log(pair[0], pair[1]);
-    // }
-  
-    const response = await fetch('https://localhost:5001/api/gym/register', {
-      method: 'POST',
-      body: formData,
-    });
   };
-  
+
   const stepLabels = ['Operating Details', 'Documents'];
 
   const canFinish = !!wizard.operatingDetails.fee && !!wizard.gymDoc.gymLogo;
 
-    const handleGymLogo = (event: React.ChangeEvent<HTMLInputElement>) => {
-      const file = event.target.files?.[0];
-      if (file) {
-        setWizardData((prev) => ({
-          ...prev,
-          gymDoc: {
-            ...prev?.gymDoc,
-            gymLogo: file,
-          },
-        }));
-      }
-    };
-    
+  const handleGymLogo = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      setWizardData((prev) => ({
+        ...prev,
+        gymDoc: {
+          ...prev?.gymDoc,
+          gymLogo: file,
+        },
+      }));
+    }
+  };
+
 
   const steps = [
 
-  
+
     <div key="3">
       <h2 className="text-2xl font-semibold mb-4">Step 3: Operating Details</h2>
       <div className="grid gap-6">
@@ -112,12 +116,12 @@ export default function HomePage() {
 
               return (
                 <Checkbox
-                key={day}
-                label={day}
-                checked={wizard?.operatingDetails?.days.includes(day) ?? false}
-                onChange={(checked) => handleDayToggle(day, checked)}
-              />
-              
+                  key={day}
+                  label={day}
+                  checked={wizard?.operatingDetails?.days.includes(day) ?? false}
+                  onChange={(checked) => handleDayToggle(day, checked)}
+                />
+
               );
             })}
           </div>
@@ -131,7 +135,16 @@ export default function HomePage() {
               <Input
                 id="morningOpen"
                 type="time"
-                
+                value={wizard?.operatingDetails?.morningOpen ?? ''}
+                onChange={(e) =>
+                  setWizardData((prev) => ({
+                    ...prev,
+                    operatingDetails: {
+                      ...prev?.operatingDetails,
+                      morningOpen: e.target.value,
+                    },
+                  }))
+                }
               />
               <span className="absolute text-gray-500 -translate-y-1/2 pointer-events-none right-3 top-1/2 dark:text-gray-400">
                 <TimeIcon />
@@ -141,20 +154,20 @@ export default function HomePage() {
           <div>
             <Label htmlFor="morningClose">Morning Close</Label>
             <div className="relative">
-            <Input
-  id="morningOpen"
-  type="time"
-  value={wizard?.operatingDetails?.morningOpen ?? ''}
-  onChange={(e) =>
-    setWizardData((prev) => ({
-      ...prev,
-      operatingDetails: {
-        ...prev?.operatingDetails,
-        morningOpen: e.target.value,
-      },
-    }))
-  }
-/>
+              <Input
+                id="morningClose"
+                type="time"
+                value={wizard?.operatingDetails?.morningClose ?? ''}
+                onChange={(e) =>
+                  setWizardData((prev) => ({
+                    ...prev,
+                    operatingDetails: {
+                      ...prev?.operatingDetails,
+                      morningClose: e.target.value,
+                    },
+                  }))
+                }
+              />
 
               <span className="absolute text-gray-500 -translate-y-1/2 pointer-events-none right-3 top-1/2 dark:text-gray-400">
                 <TimeIcon />
@@ -167,19 +180,19 @@ export default function HomePage() {
         <div>
           <Label htmlFor="fee">Monthly Subscription Fee</Label>
           <Input
-  id="fee"
-  type="number"
-  value={wizard?.operatingDetails?.fee ?? ''}
-  onChange={(e) =>
-    setWizardData((prev) => ({
-      ...prev,
-      operatingDetails: {
-        ...prev?.operatingDetails,
-        fee: e.target.value,
-      },
-    }))
-  }
-/>
+            id="fee"
+            type="number"
+            value={wizard?.operatingDetails?.fee ?? ''}
+            onChange={(e) =>
+              setWizardData((prev) => ({
+                ...prev,
+                operatingDetails: {
+                  ...prev?.operatingDetails,
+                  fee: e.target.value,
+                },
+              }))
+            }
+          />
 
         </div>
       </div>

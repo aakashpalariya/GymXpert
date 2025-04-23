@@ -9,12 +9,15 @@ namespace Dtos
 {
     public class GymRegistrationRequest
     {
-        public string Fee { get; set; }
+        // Operating Details
+        public List<string> Days { get; set; } = new List<string>();
         public string MorningOpen { get; set; }
         public string MorningClose { get; set; }
-        public string EveningOpen { get; set; }
-        public string EveningClose { get; set; }
-        public List<string> Days { get; set; }
+
+        // Fee can be string or number in TS — use decimal in C#
+        public decimal Fee { get; set; }
+
+        // Documents
         public IFormFile? GymLogo { get; set; }
     }
 }

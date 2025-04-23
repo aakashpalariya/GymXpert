@@ -6,8 +6,6 @@ interface TempWizard {
     days: string[]; // e.g. ['Monday', 'Wednesday']
     morningOpen: string; // time format 'HH:MM'
     morningClose: string;
-    eveningOpen: string;
-    eveningClose: string;
     fee: string | number; // monthly subscription fee
   }
   
