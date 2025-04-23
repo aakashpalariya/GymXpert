@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Wizard from '@/components/wizard/Wizard';
 import Form from '@/components/form/Form';
 import Label from '@/components/form/Label';
@@ -8,11 +8,22 @@ import Input from '@/components/form/input/InputField';
 import Select from '@/components/form/Select';
 import Radio from '@/components/form/input/Radio';
 import Checkbox from '@/components/form/input/Checkbox';
+import { CalenderIcon, TimeIcon } from '@/icons';
+import "flatpickr/dist/flatpickr.min.css"; // Import styles
+import FileInput from '@/components/form/input/FileInput';
+import TextArea from '@/components/form/input/TextArea';
+// import ReactFlatpickr, { ReactFlatpickrProps } from "react-flatpickr";
+// import Flatpickr from 'react-flatpickr';
+
 
 export default function HomePage() {
   // const [wizard, setWizardData] = useState<{ [key: string]: any }>({});
   // const [wizard, setWizardData] = useState<RegisterWizard>();
   const [state, setState] = useState("");
+  const [date, setDate] = useState<Date | undefined>(undefined); // State for date
+  const [time, setTime] = useState<Date | undefined>(undefined); // State for time
+  const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
+
 
   type DeepPartial<T> = {
     [K in keyof T]?: T[K] extends object ? DeepPartial<T[K]> : T[K];
@@ -38,6 +49,48 @@ export default function HomePage() {
   const canFinish =
     !!wizard?.personalInfo?.firstName?.trim() &&
     !!wizard.operatingDetails?.fee;
+
+  const handleDateChange = (selectedDates: Date[]) => {
+    console.log('Selected date(s):', selectedDates);
+    setSelectedDate(selectedDates[0]);
+  };
+  // const handleGymLogo = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   const file = event.target.files?.[0];
+  //   if (file) {
+  //     console.log("Selected file:", file.name);
+  //   }
+  // };
+  const handleGymLogo = (event: React.ChangeEvent<HTMLInputElement>) => {    // Now, you can use the file object to update your state or do other operations.
+    const file = event.target.files?.[0];  // For single file uploads
+
+    if (file) {    // Update state if needed
+      console.log('Uploaded file:', file);  // Log or process the file here
+
+      setWizardData({
+        ...wizard,
+        gymDoc: {
+          ...wizard.gymDoc,
+          gymLogo: file,  // Assuming you're storing the file object in gymLogo
+        },
+      });
+    }
+  };
+
+  const handleGSTInDoc = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];  // For single file uploads
+
+    if (file) {    // Update state if needed
+      console.log('Uploaded file:', file);  // Log or process the file here
+
+      setWizardData({
+        ...wizard,
+        gymDoc: {
+          ...wizard.gymDoc,
+          gstDoc: file,  // Assuming you're storing the file object in gymLogo
+        },
+      });
+    }
+  };
 
   const steps = [
     // Step 1: Personal Info
@@ -168,6 +221,56 @@ export default function HomePage() {
               } />
             </div>
           </div>
+          <div className="grid gap-6 sm:grid-cols-12">
+            <div className="grid gap-6 sm:col-span-7">
+              <div>
+                <Label htmlFor="Address">Address</Label>
+                <TextArea
+                  value={wizard.gymInfo?.address}
+                  onChange={(value: string) => {
+                    setWizardData({
+                      ...wizard,
+                      gymInfo: {
+                        ...wizard.gymInfo,
+                        address: value,
+                      },
+                    });
+                  }}
+                  rows={6}
+                  placeholder="Enter description about the Gym"
+                />
+
+
+              </div>
+            </div>
+            <div className="grid gap-6 sm:col-span-5">
+              <div>
+                <Label htmlFor="cnumber">Contact Number</Label>
+                <Input type="text" value={wizard.gymInfo?.contactNumber} placeholder="Gym contact number" id="cnumber" onChange={(e) =>
+                  setWizardData({
+                    ...wizard,
+                    gymInfo: {
+                      ...wizard.gymInfo,
+                      contactNumber: e.target.value,
+                    },
+                  })
+                } />
+              </div>
+              <div>
+                <Label htmlFor="gymemail">Gym Email</Label>
+                <Input type="text" value={wizard.gymInfo?.email} placeholder="Gym email" id="gymemail" onChange={(e) =>
+                  setWizardData({
+                    ...wizard,
+                    gymInfo: {
+                      ...wizard.gymInfo,
+                      email: e.target.value,
+                    },
+                  })
+                } />
+              </div>
+            </div>
+
+          </div>
         </div>
       </Form>
     </div>,
@@ -212,79 +315,98 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* Morning Timing */}
-          <div className="grid gap-2 sm:grid-cols-2">
+          {/* Timing */}
+          <div className="grid gap-2 sm:grid-cols-4">
             <div>
               <Label htmlFor="morningOpen">Morning Open</Label>
-              <Input
-                id="morningOpen"
-                type="time"
-                value={wizard.operatingDetails?.morningOpen || ''}
-                onChange={(e) =>
-                  setWizardData({
-                    ...wizard,
-                    operatingDetails: {
-                      ...wizard.operatingDetails,
-                      morningOpen: e.target.value,
-                    },
-                  })
-                }
-              />
+              <div className="relative">
+                <Input
+                  id="morningOpen"
+                  type="time"
+                  value={wizard.operatingDetails?.morningOpen || ''}
+                  onChange={(e) =>
+                    setWizardData({
+                      ...wizard,
+                      operatingDetails: {
+                        ...wizard.operatingDetails,
+                        morningOpen: e.target.value,
+                      },
+                    })
+                  }
+                />
+                <span className="absolute text-gray-500 -translate-y-1/2 pointer-events-none right-3 top-1/2 dark:text-gray-400">
+                  <TimeIcon />
+                </span>
+              </div>
             </div>
             <div>
               <Label htmlFor="morningClose">Morning Close</Label>
-              <Input
-                id="morningClose"
-                type="time"
-                value={wizard.operatingDetails?.morningClose || ''}
-                onChange={(e) =>
-                  setWizardData({
-                    ...wizard,
-                    operatingDetails: {
-                      ...wizard.operatingDetails,
-                      morningClose: e.target.value,
-                    },
-                  })
-                }
-              />
+              <div className="relative">
+                <Input
+                  id="morningClose"
+                  type="time"
+                  value={wizard.operatingDetails?.morningClose || ''}
+                  onChange={(e) =>
+                    setWizardData({
+                      ...wizard,
+                      operatingDetails: {
+                        ...wizard.operatingDetails,
+                        morningClose: e.target.value,
+                      },
+                    })
+                  }
+                />
+                <span className="absolute text-gray-500 -translate-y-1/2 pointer-events-none right-3 top-1/2 dark:text-gray-400">
+                  <TimeIcon />
+                </span>
+              </div>
             </div>
-          </div>
-
-          {/* Evening Timing */}
-          <div className="grid gap-2 sm:grid-cols-2">
             <div>
               <Label htmlFor="eveningOpen">Evening Open</Label>
-              <Input
-                id="eveningOpen"
-                type="time"
-                value={wizard.operatingDetails?.eveningOpen || ''}
-                onChange={(e) =>
-                  setWizardData({
-                    ...wizard,
-                    operatingDetails: {
-                      ...wizard.operatingDetails,
-                      eveningOpen: e.target.value,
-                    },
-                  })
-                }
-              />
+              <div className="relative">
+                <Input
+                  id="eveningOpen"
+                  type="time"
+                  value={wizard.operatingDetails?.eveningOpen || ''}
+                  onChange={(e) =>
+                    setWizardData({
+                      ...wizard,
+                      operatingDetails: {
+                        ...wizard.operatingDetails,
+                        eveningOpen: e.target.value,
+                      },
+                    })
+                  }
+                />
+                <span className="absolute text-gray-500 -translate-y-1/2 pointer-events-none right-3 top-1/2 dark:text-gray-400">
+                  <TimeIcon />
+                </span>
+              </div>
+
+
+
             </div>
             <div>
               <Label htmlFor="eveningClose">Evening Close</Label>
-              <Input
-                id="eveningClose"
-                type="time"
-                value={wizard.operatingDetails?.eveningClose || ''}
-                onChange={(e) =>
-                  setWizardData({
-                    ...wizard,
-                    operatingDetails: {
-                      ...wizard.operatingDetails,
-                      eveningClose: e.target.value,
-                    },
-                  })
-                }
-              />
+              <div className="relative">
+                <Input
+                  id="eveningClose"
+                  type="time"
+                  value={wizard.operatingDetails?.eveningClose || ''}
+                  onChange={(e) =>
+                    setWizardData({
+                      ...wizard,
+                      operatingDetails: {
+                        ...wizard.operatingDetails,
+                        eveningClose: e.target.value,
+                      },
+                    })
+                  }
+                />
+                <span className="absolute text-gray-500 -translate-y-1/2 pointer-events-none right-3 top-1/2 dark:text-gray-400">
+                  <TimeIcon />
+                </span>
+              </div>
             </div>
           </div>
 
@@ -401,37 +523,21 @@ export default function HomePage() {
     <div key="5">
       <h2 className="text-2xl font-semibold mb-4">Step 5: Upload Documents</h2>
       <form className="space-y-4">
-        <div>
-          <label>Gym Logo:</label>
-          <input
-            type="file"
-            accept="image/*"
-            onChange={(e) =>
-              setWizardData({
-                ...wizard,
-                gymDoc: {
-                  ...wizard.gymDoc,
-                  gymLogo: e.target.files?.[0],
-                },
-              })
-            }
-          />
-        </div>
-        <div>
-          <label>GST IN Document:</label>
-          <input
-            type="file"
-            accept=".pdf,.jpg,.png"
-            onChange={(e) =>
-              setWizardData({
-                ...wizard,
-                gymDoc: {
-                  ...wizard.gymDoc,
-                  gstDoc: e.target.files?.[0],
-                },
-              })
-            }
-          />
+        <div className="grid gap-2 sm:grid-cols-2">
+          <div>
+            <Label>Gym Logo:</Label>
+            <FileInput onChange={handleGymLogo} className="custom-class" />
+            {wizard.gymDoc?.gymLogo && (
+              <Label>Uploaded file: <span className="mt-2 text-xs text-center text-gray-700 dark:text-gray-300 max-w-[90px]">{wizard.gymDoc.gymLogo.name}</span></Label> 
+            )}
+          </div>
+          <div>
+            <Label>GST IN Document:</Label>
+            <FileInput onChange={handleGSTInDoc} className="custom-class" />
+            {wizard.gymDoc?.gstDoc && (
+              <Label>Uploaded file: <span className="mt-2 text-xs text-center text-gray-700 dark:text-gray-300 max-w-[90px]">{wizard.gymDoc.gstDoc.name}</span></Label> 
+            )}
+          </div>
         </div>
       </form>
     </div>,
