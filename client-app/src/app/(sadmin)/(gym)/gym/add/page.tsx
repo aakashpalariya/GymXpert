@@ -209,13 +209,13 @@ export default function AddGym() {
                             <div>
                                 <Label htmlFor="datePicker">Date of Birth</Label>
                                 <div className="relative">
-                                    <Flatpickr
+                                    {/* <Flatpickr
                                         className="h-11 w-full rounded-lg border appearance-none px-4 py-2.5 text-sm shadow-theme-xs placeholder:text-gray-400 focus:outline-hidden focus:ring-3 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800  bg-transparent text-gray-800 border-gray-300 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:focus:border-brand-800"
                                         value={dob || undefined}
                                         placeholder="Date of birth"
                                         onChange={(selectedDate) => setDOB(selectedDate[0])}
                                         options={{ dateFormat: 'd M, Y' }}
-                                    />
+                                    /> */}
                                     <span className="absolute text-gray-500 -translate-y-1/2 pointer-events-none right-3 top-1/2 dark:text-gray-400">
                                         <CalenderIcon />
                                     </span>

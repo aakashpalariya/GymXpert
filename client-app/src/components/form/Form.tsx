@@ -4,16 +4,25 @@ interface FormProps {
   onSubmit: (event: FormEvent<HTMLFormElement>) => void;
   children: ReactNode;
   className?: string;
+  isEncType?: boolean; // should be boolean, not "false"
+  encTypeVal?: string; // should be a string, not ""
 }
 
-const Form: FC<FormProps> = ({ onSubmit, children, className }) => {
+const Form: FC<FormProps> = ({
+  onSubmit,
+  children,
+  className,
+  isEncType,
+  encTypeVal
+}) => {
   return (
     <form
       onSubmit={(event) => {
-        event.preventDefault(); // Prevent default form submission
+        event.preventDefault();
         onSubmit(event);
       }}
-      className={` ${className}`} // Default spacing between form fields
+      className={className}
+      {...(isEncType && encTypeVal ? { encType: encTypeVal } : {})}
     >
       {children}
     </form>

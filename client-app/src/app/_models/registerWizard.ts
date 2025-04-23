@@ -7,30 +7,21 @@ interface RegisterWizard {
 }
 
 interface PersonalInfo {
-  firstName: string | undefined;
+  firstName: string;
   middleName: string;
   lastName: string;
-  userName: string;
   gender: string;
-  city: string;
-  state: string;
   mobileNumber: string;
   email: string;
-  address: string;
-  dateOfBirth: Date | null;
 }
 
 interface GymInfo {
-  gymId: number;
   gymName: string;
   address: string;
   city: string;
   state: string;
   contactNumber: string;
   email: string;
-  isActive: boolean;
-  isDeleted: boolean;
-  joinedDate: Date | null;
 }
 interface OperatingDetails {
   days: string[]; // e.g. ['Monday', 'Wednesday']

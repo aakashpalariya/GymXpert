@@ -1,4 +1,4 @@
-import { fetchWithAuth } from "../_lib/fetcher";
+import { fetchPublic, fetchPublicFormData, fetchWithAuth } from "../_lib/fetcher";
 
 export const getGymDDL = async (): Promise<SelectItem<number>[]> => {
     const data = await fetchWithAuth<any>('api/gym/select-item', "GET");
@@ -62,5 +62,31 @@ export const addGymDetails = async (gym: Gym): Promise<number> => {
             throw new Error("Failed to update gym details");
         }
         return data.data;
+};
+
+export const registerGym = async (wizardData: RegisterWizard): Promise<any> => {
+    const response = await fetchPublic<any>(`api/gym/register`, "POST", {
+        body: JSON.stringify(wizardData)
+    });
+
+    console.log(response.data)
+    
+    // if (response.statusCode != 200) {
+    //     console.log(response.data)
+    // }
+    return response.data;
+};
+
+export const registerAsGym = async (formData: FormData): Promise<any> => {
+    const response = await fetchPublicFormData<any>(`api/gym/register`, "POST", {
+        body: formData
+    });
+
+    console.log(response.data)
+    
+    // if (response.statusCode != 200) {
+    //     console.log(response.data)
+    // }
+    return response.data;
 };
 

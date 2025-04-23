@@ -44,6 +44,81 @@ export const fetchWithAuth = async <T>(
 };
 
 
+export const fetchPublic = async <T>(
+    endpoint: string,
+    method: 'GET' | 'POST' | 'PUT' | 'DELETE' = 'GET', 
+    options: FetchOptions = {}
+  ): Promise<T> => {
+    const url = `${BASE_URL}${endpoint}`;
+  
+    let headers: Record<string, string> = {
+      ...options.headers, // Allow overriding headers if needed
+    };
+  
+    // Check if we're dealing with a FormData request
+    let body: BodyInit | undefined;
+    
+    if (options.body instanceof FormData) {
+      // If FormData is being sent, let the browser handle the content type
+      body = options.body;
+    } else {
+      // Default to sending JSON if it's not FormData
+      headers = {
+        'Content-Type': 'application/json',
+        ...headers,
+      };
+  
+      // If there's a body, serialize it to JSON
+      body = options.body ? JSON.stringify(options.body) : undefined;
+    }
+  
+    const res = await fetch(url, {
+      method,
+      headers,
+      body,
+      ...options,
+    });
+  
+    if (!res.ok) {
+      throw new Error('Network response was not ok');
+    }
+  
+    // Parse the response body as JSON if expected
+    const data: T = await res.json();
+    return data;
+  };  
+
+export const fetchPublicFormData = async <T>(
+    endpoint: string,
+    method: 'GET' | 'POST' | 'PUT' | 'DELETE' = 'GET', 
+    options: FetchOptions = {}
+  ): Promise<T> => {
+    const url = `${BASE_URL}${endpoint}`;
+  
+    let headers: Record<string, string> = {
+      ...options.headers, // Allow overriding headers if needed
+    };
+  
+    const body = options.body ? options.body : undefined;
+  
+    const res = await fetch(url, {
+      method,
+      headers,
+      body,
+      ...options,
+    });
+  
+    if (!res.ok) {
+      throw new Error('Network response was not ok');
+    }
+  
+    // Parse the response body as JSON if expected
+    const data: T = await res.json();
+    return data;
+  };  
+
+
+
 function getUserFromLocalStorage(): User | null {
     if (typeof window !== 'undefined') {
         // Get the user data from localStorage

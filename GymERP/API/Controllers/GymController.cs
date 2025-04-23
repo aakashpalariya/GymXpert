@@ -55,6 +55,18 @@ namespace API.Controllers
             return BadRequest(new ApiResponse<object>(statusCode: (int)StatusCodeEnum.BadRequest, message: "Failed to add Gym!", data: null));
         }
 
+        [AllowAnonymous]
+        [HttpPost("register")]
+        public async Task<ActionResult> RegisterGym([FromForm] GymRegistrationRequest gymRegister)
+        {
+            //var data = await _uow.GymRepository.AddGymAsync(new GymDto());
+            //if (await _uow.Complete())
+            //{
+            //    return Ok(new ApiResponse<object>(statusCode: (int)StatusCodeEnum.OK, message: "Gym details added successfully!", data: data.GymId));
+            //}
+            return Ok(new ApiResponse<object>(statusCode: (int)StatusCodeEnum.OK, message: "Failed to add Gym!", data: null));
+        }
+
         [HttpGet("{gymId}")]
         public async Task<ActionResult<Gym>> GetGymById(int gymId)
         {

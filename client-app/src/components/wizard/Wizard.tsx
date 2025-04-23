@@ -4,18 +4,14 @@ import React, { useState, ReactNode } from 'react';
 import classNames from 'classnames';
 import Button from '../ui/button/Button';
 
-type DeepPartial<T> = {
-    [P in keyof T]?: T[P] extends object ? DeepPartial<T[P]> : T[P];
-};
 interface WizardProps<T = { [key: string]: any }> {
     steps: ReactNode[];
     stepLabels: string[];
     canFinish?: boolean;
-    formData?: DeepPartial<T>;
-    setFormData?: (data: DeepPartial<T>) => void;
+    formData?: T;
+    setFormData?: (data: T) => void;
     onFinish: () => void;
 }
-
 
 const Wizard = <T,>({ steps, stepLabels, canFinish, formData, setFormData, onFinish }: WizardProps<T>) => {
     const [currentStep, setCurrentStep] = useState(0);
@@ -91,7 +87,7 @@ const Wizard = <T,>({ steps, stepLabels, canFinish, formData, setFormData, onFin
                     onClick={() => setCurrentStep((prev) => Math.max(prev - 1, 0))}
                     disabled={isFirstStep}
                 >
-                    ← Back
+                    Back
                 </Button>
                 <Button
                     onClick={() => {
