@@ -10,3 +10,8 @@ dotnet ef migrations add initialMigration -o Migrations --startup-project API  -
 dotnet ef database update --startup-project API  --project Data
 
 dotnet ef migrations remove --startup-project API  --project Data
+
+
+
+Run project
+dotnet run --project API

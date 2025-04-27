@@ -46,7 +46,7 @@ try
     await context.Database.MigrateAsync(); 
     await Seed.SeedUsers(userManager, roleManager);
     await Seed.SeedPlans(context);
-    await Seed.SeedStates(context);
+    //await Seed.SeedStates(context);
 }
 catch (Exception ex)
 {

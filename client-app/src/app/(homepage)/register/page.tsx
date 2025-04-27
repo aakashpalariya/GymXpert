@@ -6,65 +6,12 @@ import Form from '@/components/form/Form';
 import Label from '@/components/form/Label';
 import Input from '@/components/form/input/InputField';
 import Select from '@/components/form/Select';
-import Radio from '@/components/form/input/Radio';
 import Checkbox from '@/components/form/input/Checkbox';
 import { CalenderIcon, TimeIcon } from '@/icons';
 import "flatpickr/dist/flatpickr.min.css"; // Import styles
 import FileInput from '@/components/form/input/FileInput';
 import TextArea from '@/components/form/input/TextArea';
 import { addGymDetails, registerAsGym, registerGym } from '@/app/_services/gym.service';
-// import ReactFlatpickr, { ReactFlatpickrProps } from "react-flatpickr";
-// import Flatpickr from 'react-flatpickr';
-
-
-export type DeepPartial<T> = {
-  [P in keyof T]?: T[P] extends object ? DeepPartial<T[P]> : T[P];
-};
-function toFullWizard(partial: DeepPartial<RegisterWizard>): RegisterWizard {
-  return {
-    personalInfo: {
-      firstName: "",
-      middleName: "",
-      lastName: "",
-      gender: "",
-      mobileNumber: "",
-      email: "",
-      ...partial.personalInfo,
-    },
-    gymInfo: {
-      gymName: "",
-      address: "",
-      city: "",
-      state: "",
-      contactNumber: "",
-      email: "",
-      ...partial.gymInfo,
-    },
-    operatingDetails: {
-      days: (partial.operatingDetails?.days ?? []).filter(
-        (day): day is string => typeof day === 'string'
-      ),
-      morningOpen: partial.operatingDetails?.morningOpen ?? "",
-      morningClose: partial.operatingDetails?.morningClose ?? "",
-      eveningOpen: partial.operatingDetails?.eveningOpen ?? "",
-      eveningClose: partial.operatingDetails?.eveningClose ?? "",
-      fee: partial.operatingDetails?.fee ?? "",
-    },
-    facilitiesServices: {
-      facilities: (partial.facilitiesServices?.facilities ?? []).filter(
-        (f): f is string => typeof f === 'string'
-      ),
-      services: (partial.facilitiesServices?.services ?? []).filter(
-        (s): s is string => typeof s === 'string'
-      ),
-    },
-    gymDoc: {
-      gymLogo: null,
-      gstDoc: null,
-      ...partial.gymDoc,
-    },
-  };
-}
 
 
 export default function HomePage() {
@@ -76,10 +23,41 @@ export default function HomePage() {
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
 
 
-  type DeepPartial<T> = {
-    [K in keyof T]?: T[K] extends object ? DeepPartial<T[K]> : T[K];
-  };
-  const [wizard, setWizardData] = useState<DeepPartial<RegisterWizard>>({});
+  const [wizard, setWizardData] = useState<RegisterWizard>({
+    personalInfo: {
+      firstName: '',
+      middleName: '',
+      lastName: '',
+      gender: '',
+      mobileNumber: '',
+      email: '',
+    },
+    gymInfo: {
+      gymName: '',
+      address: '',
+      city: '',
+      state: '',
+      contactNumber: '',
+      email: '',
+    },
+    operatingDetails: {
+      days: [],
+      morningOpen: '',
+      morningClose: '',
+      eveningOpen: '',
+      eveningClose: '',
+      fee: '',
+    },
+    facilitiesServices: {
+      facilities: [],
+      services: [],
+    },
+    gymDoc: {
+      gymLogo: null,
+      gstDoc: null,
+    },
+
+  });
   const states = [
     { value: "Uttarakhand", label: "Uttarakhand" },
     { value: "Delhi", label: "Delhi" },
@@ -92,39 +70,83 @@ export default function HomePage() {
 
   const handleFinish = async () => {
     if (canFinish) {
+      // const formData = new FormData();
+      // formData.append('personalInfo', JSON.stringify(wizard.personalInfo)); // Add personalInfo as a JSON string
+      // formData.append('gymInfo', JSON.stringify(wizard.gymInfo)); // Similarly for other objects
+      // formData.append('operatingDetails', JSON.stringify(wizard.operatingDetails)); // Similarly for other objects
+      // formData.append('facilitiesServices', JSON.stringify(wizard.facilitiesServices)); // Similarly for other objects
+      // if (wizard.gymDoc?.gymLogo) {
+      //   formData.append('gymDoc[gstDoc]', wizard.gymDoc.gymLogo);
+      // }
+      // if (wizard.gymDoc?.gstDoc) {
+      //   formData.append('gymDoc[gstDoc]', wizard.gymDoc.gstDoc);
+      // }
       const formData = new FormData();
-      formData.append('personalInfo', JSON.stringify(wizard.personalInfo)); // Add personalInfo as a JSON string
-      formData.append('gymInfo', JSON.stringify(wizard.gymInfo)); // Similarly for other objects
-      formData.append('operatingDetails', JSON.stringify(wizard.operatingDetails)); // Similarly for other objects
-      if (wizard.personalInfo?.firstName) {
-        formData.append('personalInfo.firstName', wizard.personalInfo.firstName);
-      }
-      formData.append('facilitiesServices', JSON.stringify(wizard.facilitiesServices)); // Similarly for other objects
-      if (wizard.gymDoc?.gymLogo) {
-        formData.append('gymDoc[gstDoc]', wizard.gymDoc.gymLogo);
-      }
-      if (wizard.gymDoc?.gstDoc) {
-        formData.append('gymDoc[gstDoc]', wizard.gymDoc.gstDoc);
-      }
+
+// Personal Info
+formData.append('personalInfo.FirstName', wizard.personalInfo.firstName);
+// formData.append('MiddleName', wizard.personalInfo.middleName || "");
+formData.set('personalInfo.MiddleName', wizard.personalInfo.middleName || "");  // Force "" even if it's empty
+formData.append('personalInfo.LastName', wizard.personalInfo.lastName);
+formData.append('personalInfo.Gender', "wizard.personalInfo.gender");
+formData.append('personalInfo.MobileNumber', wizard.personalInfo.mobileNumber);
+formData.append('personalInfo.Email', wizard.personalInfo.email);
+
+// Gym Info
+formData.append('gymInfo.GymName', wizard.gymInfo.gymName);
+formData.append('gymInfo.Address', wizard.gymInfo.address);
+formData.append('gymInfo.City', wizard.gymInfo.city);
+formData.append('gymInfo.State', "wizard.gymInfo.state");
+formData.append('gymInfo.ContactNumber', wizard.gymInfo.contactNumber);
+formData.append('gymInfo.Email', wizard.gymInfo.email);
+
+// Operating Details
+formData.append('operatingDetails.Fee', wizard.operatingDetails.fee.toString());
+formData.append('operatingDetails.MorningOpen', wizard.operatingDetails.morningOpen);
+formData.append('operatingDetails.MorningClose', wizard.operatingDetails.morningClose);
+formData.append('operatingDetails.EveningOpen', wizard.operatingDetails.eveningOpen);
+formData.append('operatingDetails.EveningClose', wizard.operatingDetails.eveningClose);
+
+// Handling Days (List)
+wizard.operatingDetails.days.forEach(day => {
+  formData.append('operatingDetails.Days', day); // Use 'Days[]' to handle list correctly
+});
+
+// Facilities and Services
+wizard.facilitiesServices.facilities.forEach(facility => {
+  formData.append('facilitiesServices.Facilities', facility); // Use 'Facilities[]'
+});
+wizard.facilitiesServices.services.forEach(service => {
+  formData.append('facilitiesServices.Services', service); // Use 'Services[]'
+});
+
+// Documents (Files)
+if (wizard.gymDoc.gymLogo) {
+  formData.append('gymDoc.GymLogo', wizard.gymDoc.gymLogo);  // For files, no need for [] here
+}
+if (wizard.gymDoc.gstDoc) {
+  formData.append('gymDoc.GstDoc', wizard.gymDoc.gstDoc);  // For files, no need for [] here
+}
+
 
       // const response = await fetch('/api/your-endpoint', {
       //   method: 'POST',
       //   body: formData,
       // });
-      console.log("wizard " + wizard);
-      const fullWizard = toFullWizard(wizard);
-      console.log("personalInfo " + JSON.stringify(wizard.personalInfo));
-      console.log("fullWizard " + JSON.stringify(fullWizard));
-      console.log("formData " + JSON.stringify(formData));
-      for (let [key, value] of formData.entries()) {
-        console.log(key, value);
+      //console.log("personalInfo " + JSON.stringify(wizard.personalInfo));
+      //console.log("fullWizard " + JSON.stringify(wizard));
+      //console.log("formData " + JSON.stringify(formData));
+      for (const pair of formData.entries()) {
+        console.log(pair[0], pair[1]);
       }
       // const data = await registerGym(fullWizard);
       // const data2 = await registerAsGym(formData);
-      const response = await fetch('https://localhost:5001/api/gym/register', {
-        method: 'POST',
-        body: formData, // FormData is passed here
-      });
+      // const response = await fetch('https://localhost:5001/api/gym/register', {
+      //   method: 'POST',
+      //   body: formData, // FormData is passed here
+      // });
+      console.log("jai ho!");
+       const res = await registerAsGym(formData);
     }
   };
 
@@ -652,9 +674,9 @@ export default function HomePage() {
 
   return (
     <main className="bg-gray-100 dark:bg-gray-950 text-gray-900 dark:text-gray-100 transition-colors min-h-screen p-10">
-      <Form onSubmit={handleFinish} isEncType={true}  encTypeVal='multipart/form-data'>
+      <Form isEncType={true} encTypeVal='multipart/form-data'>
 
-        <Wizard<RegisterWizard>
+      <Wizard
           steps={steps}
           stepLabels={stepLabels}
           canFinish={canFinish}

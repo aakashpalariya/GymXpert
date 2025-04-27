@@ -14,10 +14,11 @@ namespace Data.Entities
         [Key]
         public int GymId { get; set; }
 
-        [Required, MaxLength(255)]
+        [MaxLength(100)]
         public string Name { get; set; }
 
         [Required]
+        [MaxLength(1000)]
         public string Address { get; set; }
 
         [MaxLength(100)]

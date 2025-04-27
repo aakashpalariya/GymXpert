@@ -57,7 +57,7 @@ namespace API.Controllers
 
         [AllowAnonymous]
         [HttpPost("register")]
-        public async Task<ActionResult> RegisterGym([FromForm] GymRegistrationRequest gymRegister)
+        public async Task<ActionResult> RegisterGym([FromForm] GymRegisterDto gymRegister)
         {
             //var data = await _uow.GymRepository.AddGymAsync(new GymDto());
             //if (await _uow.Complete())

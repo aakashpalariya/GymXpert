@@ -1,11 +1,11 @@
 import React, { FC, ReactNode, FormEvent } from "react";
 
 interface FormProps {
-  onSubmit: (event: FormEvent<HTMLFormElement>) => void;
+  onSubmit?: (event: FormEvent<HTMLFormElement>) => void; // Make onSubmit optional
   children: ReactNode;
   className?: string;
-  isEncType?: boolean; // should be boolean, not "false"
-  encTypeVal?: string; // should be a string, not ""
+  isEncType?: boolean;
+  encTypeVal?: string;
 }
 
 const Form: FC<FormProps> = ({
@@ -15,12 +15,18 @@ const Form: FC<FormProps> = ({
   isEncType,
   encTypeVal
 }) => {
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    // If onSubmit is provided, prevent the default form submission and call it
+    if (onSubmit) {
+      event.preventDefault();
+      onSubmit(event);
+    }
+    // If onSubmit is not provided, the form will submit normally
+  };
+
   return (
     <form
-      onSubmit={(event) => {
-        event.preventDefault();
-        onSubmit(event);
-      }}
+      onSubmit={handleSubmit} // Use handleSubmit to check for optional onSubmit
       className={className}
       {...(isEncType && encTypeVal ? { encType: encTypeVal } : {})}
     >

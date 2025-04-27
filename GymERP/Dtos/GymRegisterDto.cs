@@ -9,51 +9,53 @@ namespace Dtos
 {
     public class GymRegisterDto
     {
-        public PersonalInfo PersonalInfo { get; set; } = new();
-        public GymInfo GymInfo { get; set; } = new();
-        public OperatingDetails OperatingDetails { get; set; } = new();
-        public FacilitiesServices FacilitiesServices { get; set; } = new();
-        public GymDocuments GymDoc { get; set; } = new();
+        public PersonalInfo PersonalInfo { get; set; }
+        public GymInfo GymInfo { get; set; }
+        public OperatingDetails OperatingDetails { get; set; }
+        public FacilitiesServices FacilitiesServices { get; set; }
+        public GymDoc GymDoc { get; set; }
     }
+
     public class PersonalInfo
     {
-        public string FirstName { get; set; } = string.Empty;
-        public string MiddleName { get; set; } = string.Empty;
-        public string LastName { get; set; } = string.Empty;
-        public string Gender { get; set; } = string.Empty;
-        public string MobileNumber { get; set; } = string.Empty;
-        public string Email { get; set; } = string.Empty;
+        public string FirstName { get; set; }
+        public string? MiddleName { get; set; }
+        public string LastName { get; set; }
+        public string? Gender { get; set; }
+        public string MobileNumber { get; set; }
+        public string Email { get; set; }
     }
 
     public class GymInfo
     {
-        public string GymName { get; set; } = string.Empty;
-        public string Address { get; set; } = string.Empty;
-        public string City { get; set; } = string.Empty;
-        public string State { get; set; } = string.Empty;
-        public string ContactNumber { get; set; } = string.Empty;
-        public string Email { get; set; } = string.Empty;
+        public string GymName { get; set; }
+        public string Address { get; set; }
+        public string City { get; set; }
+        public string State { get; set; }
+        public string ContactNumber { get; set; }
+        public string Email { get; set; }
     }
 
     public class OperatingDetails
     {
-        public List<string> Days { get; set; } = new();
-        public string MorningOpen { get; set; } = string.Empty;
-        public string MorningClose { get; set; } = string.Empty;
-        public string EveningOpen { get; set; } = string.Empty;
-        public string EveningClose { get; set; } = string.Empty;
-        public string Fee { get; set; } = string.Empty; // Can be parsed to a number if needed
+        public List<string> Days { get; set; }
+        public string MorningOpen { get; set; }
+        public string MorningClose { get; set; }
+        public string EveningOpen { get; set; }
+        public string EveningClose { get; set; }
+        public string Fee { get; set; }
     }
 
     public class FacilitiesServices
     {
-        public List<string> Facilities { get; set; } = new();
-        public List<string> Services { get; set; } = new();
+        public List<string> Facilities { get; set; }
+        public List<string> Services { get; set; }
     }
 
-    public class GymDocuments
+    public class GymDoc
     {
         public IFormFile? GymLogo { get; set; }
         public IFormFile? GstDoc { get; set; }
     }
+
 }

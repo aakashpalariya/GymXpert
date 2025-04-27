@@ -30,7 +30,7 @@ namespace Data
 
             modelBuilder.Entity<User>()
                 .Property(u => u.JoinedDate)
-                .HasDefaultValueSql("GETDATE()");
+                .HasDefaultValue(DateTime.UtcNow);
 
             // Mapping UserRole with composite primary key
             modelBuilder.Entity<UserRole>()
@@ -83,7 +83,7 @@ namespace Data
 
             modelBuilder.Entity<Gym>()
                 .Property(gs => gs.JoinedDate)
-                .HasDefaultValueSql("GETDATE()");
+                .HasDefaultValue(DateTime.UtcNow);
 
             modelBuilder.Entity<UserGym>()
                 .HasKey(ug => new { ug.UserId, ug.GymId });
